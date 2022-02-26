@@ -1,4 +1,4 @@
-export function xpToLevel(xp: number): number {
+export function xpToLevel(xp): number {
   const tree: number[] = fullXPTree();
   for (let i = 0; i < tree.length; i++) {
     const nextAmt: number = tree[i + 1];

@@ -5,16 +5,44 @@ import supabase from "$lib/supabase";
 import type { User } from "@supabase/supabase-js";
 import { userStore } from "../stores";
 import { onMount } from "svelte";
+import { xpToLevel } from "../game/utility/xp";
+import { get } from "svelte/store";
 
 let user: User;
 let player;
+let skills;
+let totalLevel;
 
 onMount(() => {
   user = supabase.auth.user();
   userStore.subscribe((userRecord) => {
     player = userRecord;
+    skills = createSkillArray(userRecord);
+    totalLevel = getTotalLevel(skills);
   });
 });
+
+function createSkillArray(userRecord) {
+  const matrix = userRecord.skillMatrix;
+  const entries = Object.entries(matrix);
+  const arr = [];
+
+  for (let i = 0; i < entries.length; i++) {
+    const [ skillName, xp ] = entries[i];
+    arr.push({
+      name: skillName,
+      xp,
+      level: xpToLevel(xp)
+    });
+  }
+  return arr;
+}
+
+function getTotalLevel(skillArray) {
+  return skillArray.reduce((prev, curr) => {
+    return prev + curr.level;
+  }, 0)
+}
 </script>
 
 {#if user && player}
@@ -33,15 +61,15 @@ onMount(() => {
     </header>
     <h4>BASIC</h4>
     <ul>
-      <li>TOTAL LEVEL: 0</li>
+      <li>TOTAL LEVEL: {totalLevel}</li>
       <li>EMAIL: {user.email}</li>
       <li>CREATED ON: {user.created_at}</li>
       <li>LAST SEEN: {user.last_sign_in_at}</li>
     </ul>
     <h4>SKILLS</h4>
       <ul>
-        {#each Object.entries(player.skillMatrix) as [skillName, xp]}
-          <li>{ skillName }: { xp }</li>
+        {#each skills as skill}
+          <li>{ skill.name }: { skill.level } ({ skill.xp } XP)</li>
         {/each}
       </ul>
   </article>

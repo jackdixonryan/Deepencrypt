@@ -14,8 +14,6 @@ export async function createGameUser(user: SupabaseUser) {
     skillMatrix: skills,
   });
 
-  console.log(gameUser);
-
   try {
     await supabase.from("players") 
       .insert([{
@@ -69,7 +67,7 @@ export async function getUserSkills(userId: string) {
   if (error) {
     throw new Error(error.message);
   } else {
-    const tree = data[0];
+    const { id, ...tree } = data[0];
     return tree; 
   }
 }
