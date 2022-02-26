@@ -25,9 +25,7 @@
   
   <section>
     <article>
-      <h1>GET A LICENSE</h1>
-      <p>We're so pleased you've decided to do things our way. Fortunately for you, it's all free. Myself and my colleague will only charge a modest tax on all transactions you make on the ERWD marketplace. Pretty good deal, right?</p>
-      <p>Just punch in some basic information below and we'll get you set up with a license.</p>
+      <h1>ACCESS LICENSE</h1>
       <form>
         <div class="grid">
           <label for="email">
@@ -39,7 +37,7 @@
             <input type="password" id="password" name="password" placeholder="Password" bind:value={password} />
           </label>
         </div>
-        <button type="button" on:click={getLicense}>Get a License</button>
+        <button type="button" on:click={getLicense}>Access License</button>
         {#if errorMessage}
           <p style="color: red; text-align: center;">{ errorMessage }</p>
         {/if}

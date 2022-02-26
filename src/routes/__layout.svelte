@@ -1,6 +1,7 @@
 <script lang="ts">
 import Navigation from "../components/Navigation.svelte";
 import Toolbar from "../components/Toolbar.svelte";
+import XpTooltip from "../components/XpTooltip.svelte";
 import { userStore } from "../stores/index";
 import supabase from "$lib/supabase";
 import { fetchGameUser } from "$lib/helpers";
@@ -20,6 +21,7 @@ onMount(async() => {
 </script>
 
 <main class="container">
+  <XpTooltip></XpTooltip>
   <Navigation></Navigation>
   <slot></slot>
 </main>

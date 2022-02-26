@@ -16,8 +16,10 @@ onMount(() => {
   user = supabase.auth.user();
   userStore.subscribe((userRecord) => {
     player = userRecord;
-    skills = createSkillArray(userRecord);
-    totalLevel = getTotalLevel(skills);
+    if (player) {
+      skills = createSkillArray(userRecord);
+      totalLevel = getTotalLevel(skills);
+    }
   });
 });
 

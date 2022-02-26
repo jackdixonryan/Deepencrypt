@@ -15,6 +15,8 @@
   let page; 
   let user;
   let resources;
+  let currentResource;
+  let miningIntervalId;
 
   userStore.subscribe((value) => {
     user = value;
@@ -28,11 +30,17 @@
 
   function harvestResource(e) {
     const resource = resources.find((r) => r.id === e.target.id);
-    
-    setTimeout(async () => {
+    currentResource = resource;
+    miningIntervalId = setInterval(async () => {
       await addXp(user.id, "mining", resource.type.xp);
-    }, resource.type.timeToComplete);
-    
+      user.addXp("mining", resource.type.xp);
+      userStore.set(user);
+    }, resource.type.timeToComplete * 1000);
+  }
+
+  function stopHarvesting() {
+    clearInterval(miningIntervalId);
+    currentResource = null;
   }
 
 </script>
@@ -54,7 +62,11 @@
             <th>{resource.id}</th>
             <td>{resource.type.name}</td>
             <td>
-              <button on:click={harvestResource} id={resource.id}>HARVEST</button>
+              {#if currentResource && currentResource.id === resource.id}
+                <button on:click={stopHarvesting} id={resource.id} class="contrast">STOP</button>
+              {:else}
+                <button on:click={harvestResource} id={resource.id}>HARVEST</button>
+              {/if}
             </td>
           </tr>
         {/each}

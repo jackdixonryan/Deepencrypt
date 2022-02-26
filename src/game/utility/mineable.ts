@@ -9,7 +9,7 @@ export const types: MineableType[] = [
     name: "chainRemains",
     requiredLevel: 1,
     xp: 1.4,
-    timeToComplete: 0.1,
+    timeToComplete: 1,
     yields: [
       { 
         item: {

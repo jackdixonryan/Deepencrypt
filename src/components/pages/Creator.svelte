@@ -12,12 +12,15 @@ let currentProgress = 0;
 async function newPage() {
   const { timeToComplete } = selectedType;
   building = true;
-  setInterval(() => {
-    currentProgress += 0.1;
+  const interval = setInterval(() => {
+    if (currentProgress < timeToComplete) {
+      currentProgress += 0.1;
+    }
   }, 100);
   setTimeout(async () => {
     const { page, user } = await createPage("basic", currentUser);
     userStore.set(user);
+    clearInterval(interval);
     building = false;
     currentProgress = 0;
   }, timeToComplete * 1000);
@@ -63,7 +66,7 @@ function closeDialog() {
     </div>
     {#if selectedType && building}
       Page build Progress...
-      <progress value={currentProgress} max={selectedType.timeToComplete + 1}></progress>
+      <progress value={currentProgress} max={selectedType.timeToComplete}></progress>
     {/if} 
     <footer>
       <button class="secondary" on:click={closeDialog}>X</button>
