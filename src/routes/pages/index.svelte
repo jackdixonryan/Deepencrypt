@@ -36,6 +36,7 @@ async function openPageCreator() {
       <thead>
         <tr>
           <th>Page ID</th>
+          <th>Page Type</th>
           <th>Creator</th>
           <th>Resource Count</th>
         </tr>
@@ -48,6 +49,7 @@ async function openPageCreator() {
               {page.id}
             </a>
           </th>
+          <td>{page.type}</td>
           <td>{page.created_by}</td>
           <td>{page.numberOfResources}</td>
         </tr>

@@ -21,18 +21,32 @@ export const types: MineableType[] = [
     ]
   },
   {
-    name: "brokeAssChain",
+    name: "dataFragments",
     requiredLevel: 1,
     xp: 1.4,
     timeToComplete: 0.1,
     yields: [
       {
         item: { 
-          name: "brokeAssChain",
+          name: "dataFragment",
         },
         quantity: 1,
         probabilityToLoot: 0.5,
       }
     ]
   },
+  {
+    name: "encryptedReferences",
+    requiredLevel: 11,
+    xp: 4.5,
+    timeToComplete: 1, 
+    yields: []
+  }, 
+  {
+    name: "corruptedMetadata",
+    requiredLevel: 11,
+    xp: 4.5,
+    timeToComplete: 1,
+    yields: []
+  }
 ];

@@ -2,12 +2,24 @@
 export let isOpen: boolean;
 export let currentUser;
 import { types } from "../../game/utility/page";
+import { xpToLevel } from "../../game/utility/xp";
 import { userStore } from "../../stores";
 import { createPage } from "../../lib/helpers";
+import { onMount } from "svelte";
 
 let selectedType;
 let building = false; 
 let currentProgress = 0;
+let webmasteringLevel = 0;
+
+onMount(() => {
+  userStore.subscribe((user) => { 
+    console.log({ user });
+    if (user) {
+      webmasteringLevel = getLevel(user.skillMatrix["webmastering"]);
+    }
+  });
+});
 
 async function newPage() {
   const { timeToComplete } = selectedType;
@@ -18,7 +30,7 @@ async function newPage() {
     }
   }, 100);
   setTimeout(async () => {
-    const { page, user } = await createPage("basic", currentUser);
+    const { page, user } = await createPage(selectedType.name, currentUser);
     userStore.set(user);
     clearInterval(interval);
     building = false;
@@ -26,6 +38,10 @@ async function newPage() {
   }, timeToComplete * 1000);
 }
 
+function getLevel(xp) {
+  const webmasteringLevel = xpToLevel(xp);
+  return webmasteringLevel;
+}
 function closeDialog() {
   isOpen = false;
 }
@@ -43,8 +59,8 @@ function closeDialog() {
           <legend>Page Type</legend>
           {#each types as type} 
             <label for={type.name}>
-              <input type="radio" id={type.name} name={type.name} value={type} bind:group={selectedType} />
-              {type.name}
+              <input type="radio" id={type.name} name={type.name} value={type} bind:group={selectedType} disabled={webmasteringLevel < type.requiredLevel}/>
+              {type.name} - Lvl. {type.requiredLevel}
             </label>
           {/each}
         </fieldset>

@@ -32,7 +32,7 @@
             setTimeout(() => {
               if (timer > 500) {
                 clearInterval(current);
-                shown = false;
+                // shown = false;
               }
             }, displayTimeInSeconds * 1000);
           }

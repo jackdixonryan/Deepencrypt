@@ -3,6 +3,7 @@ import type { ResourceType } from "../types";
 export interface PageType extends ResourceType {
   resourceMin: number;
   resourceMax: number;
+  availableResources: string[]
 }
 
 export const types: PageType[] = [ 
@@ -13,6 +14,10 @@ export const types: PageType[] = [
     timeToComplete: 4,
     resourceMin: 1,
     resourceMax: 5,
+    availableResources: [
+      "chainRemains",
+      "dataFragments"
+    ],
   },
   {
     name: "beginner",
@@ -21,6 +26,11 @@ export const types: PageType[] = [
     timeToComplete: 40,
     resourceMin: 1, 
     resourceMax: 6,
+    availableResources: [
+      "chainRemains",
+      "dataFragments",
+      "encryptedReferences"
+    ],
   },
   {
     name: "portal",
@@ -28,6 +38,34 @@ export const types: PageType[] = [
     xp: 125,
     timeToComplete: 40,
     resourceMin: 2,
-    resourceMax: 6
+    resourceMax: 6,
+    availableResources: [
+      "encryptedReferences",
+      "corruptedMetadata"
+    ],
   },
+  {
+    name: "documentation",
+    requiredLevel: 15,
+    xp: 481.3,
+    timeToComplete: 160,
+    resourceMin: 4,
+    resourceMax: 10,
+    availableResources: [
+      "encryptedReferences",
+      "corruptedMetadata"
+    ]
+  },
+  {
+    name: "intactBlock",
+    requiredLevel: 30,
+    xp: 1481.5,
+    timeToComplete: 240,
+    resourceMin: 8,
+    resourceMax: 16,
+    availableResources: [
+      "encryptedReferences",
+      "corruptedMetadata"
+    ]
+  }
 ];

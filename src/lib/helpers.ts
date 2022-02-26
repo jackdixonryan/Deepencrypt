@@ -95,7 +95,7 @@ export async function createPage(type: string, user: User) {
     const randomResourceAmount = Math.floor(Math.random() * (resourceMax - resourceMin + 1)) + resourceMin;
     const resources = [];
     for (let i = 0; i < randomResourceAmount; i++) {
-      const mineable = new Mineable({ type: "chainRemains" });
+      const mineable = new Mineable({ type: generateRandomPermissibleType(page.type) });
       resources.push(mineable);
     }
 
@@ -125,6 +125,13 @@ export async function createPage(type: string, user: User) {
     return error;
   }
 } 
+
+function generateRandomPermissibleType(pageType) {
+  const { availableResources } = pageType;
+  const len = availableResources.length;
+  const index = Math.floor(Math.random() * len);
+  return availableResources[index];
+}
 
 export async function getPage(pageId: string) {
   try {
