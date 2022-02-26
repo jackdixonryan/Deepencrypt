@@ -1,26 +1,26 @@
-import { generateId } from "../../utility";
 import { types } from "../../utility/page";
 import type { PageType } from "../../utility/page";
 import type User from "../user";
-import Mineable from "./mineable";
+// import Mineable from "./mineable";
 
 type PageOptions = {
-  resources?: Mineable[];
+  // resources?: Mineable[];
   name: string;
   type: string;
   user: User;
+  id?: string;
 }
 
 class Page {
-  resources: Mineable[];
+  // resources: Mineable[];
   name: string;
-  location: string;
+  id: string;
   type: PageType;
   userId: string;
   xpForConstruction: number;
   
   constructor(options: PageOptions) {
-    const { name, type, user } = options;
+    const { name, type, user, id } = options;
 
     const pageType = types.find((presetType) => presetType.name === type);
     if (!pageType) {
@@ -33,7 +33,7 @@ class Page {
       throw new Error("INSUFFICIENT_LEVEL");
     } else { 
       this.name = name; 
-      this.location = generateId();
+      this.id = id;
       this.userId = user.name;
       this.xpForConstruction = pageType.xp;
       
@@ -43,18 +43,18 @@ class Page {
       const resourceMin = Math.floor(pageType.resourceMin);
       const randomResourceAmount = Math.floor(Math.random() * (resourceMax - resourceMin + 1)) + resourceMin;
 
-      this.resources = [];
-      this.addRandomMineables(randomResourceAmount);
+      // this.resources = [];
+      // this.addRandomMineables(randomResourceAmount);
       
     }
   }
 
-  addRandomMineables(quantity: number): void {
-    for (let i = 0; i < quantity; i++) {
-      const mineable = new Mineable();
-      this.resources.push(mineable);
-    }
-  }
+  // addRandomMineables(quantity: number): void {
+  //   for (let i = 0; i < quantity; i++) {
+  //     const mineable = new Mineable();
+  //     this.resources.push(mineable);
+  //   }
+  // }
 }
 
 export default Page;

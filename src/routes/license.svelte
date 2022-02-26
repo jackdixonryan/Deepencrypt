@@ -6,7 +6,6 @@ import type { User } from "@supabase/supabase-js";
 import { userStore } from "../stores";
 import { onMount } from "svelte";
 import { xpToLevel } from "../game/utility/xp";
-import { get } from "svelte/store";
 
 let user: User;
 let player;

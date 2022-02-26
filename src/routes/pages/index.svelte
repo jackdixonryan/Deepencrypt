@@ -1,21 +1,29 @@
 
 <script lang="ts">
-  import supabase from "$lib/supabase";
-  import Page from "src/game/lib/resources/page";
-  import { onMount } from "svelte";
-  let pages;
+import supabase from "$lib/supabase";
+import Page from "../../game/lib/resources/page";
+import { onMount } from "svelte";
+import { createPage } from "$lib/helpers";
+import { userStore } from "../../stores";
+let pages;
 
-  onMount(async () => {
-    const tablesCall = await supabase.from("pages").select("*").limit(50);
-    pages = tablesCall.data;
+let currentUser; 
+
+onMount(async () => {
+  const tablesCall = await supabase.from("pages").select("*").limit(50);
+  pages = tablesCall.data;
+
+  userStore.subscribe((val) => {
+    currentUser = val;
   });
+});
 
-  async function createPage() {
+async function newPage() {
+  const { page, user } = await createPage("basic", currentUser);
+  userStore.set(user);
+}
 
-  }
 </script>
-
-
 
 <section>
   <h2>ERWD PAGE DIRECTORY</h2>
@@ -43,5 +51,5 @@
   {/if}
 </section>
 <section>
-  <!-- <button @click={createPage}>CREATE A PAGE</button> -->
+  <button on:click={newPage}>CREATE A PAGE</button>
 </section>

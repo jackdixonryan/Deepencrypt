@@ -1,6 +1,7 @@
 import User from "../game/lib/user";
 import supabase from "./supabase";
 import type { User as SupabaseUser }from "@supabase/supabase-js"
+import Page from "../game/lib/resources/page";
 
 
 // takes a supabase user and returns one of ours.
@@ -72,3 +73,47 @@ export async function getUserSkills(userId: string) {
   }
 }
 
+export async function createPage(type: string, user: User) {
+  try {
+    const page = new Page({
+      name: "",
+      user: user,
+      type
+    });
+
+    // creates the SB page.
+    const response = await supabase.from("pages")
+      .insert([{
+        created_by: user.id,
+        type: type,
+        xpForConstruction: page.xpForConstruction
+      }]);
+
+    user.addXp("webmastering", page.xpForConstruction);
+    await addXp(user.id, "webmastering", page.xpForConstruction);
+    return { page, user };
+
+  } catch(error) {
+    return error;
+  }
+} 
+
+export async function addXp(userId, skill, xp) { 
+  const tree = await getUserSkills(userId);
+  let newXp;
+  if (tree) {
+    newXp = tree[skill] + xp;
+    // now find the appropriate value. 
+
+    const { data, error } = await supabase
+      .from("skill_trees")
+      .update({ [skill]: newXp })
+      .eq('id', userId);
+    
+    if (error) {
+      console.log(error);
+    } else {
+      return data;
+    }
+  } 
+}
