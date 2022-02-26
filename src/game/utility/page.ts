@@ -10,7 +10,7 @@ export const types: PageType[] = [
     name: "basic",
     requiredLevel: 1,
     xp: 98,
-    timeToComplete: 40,
+    timeToComplete: 4,
     resourceMin: 1,
     resourceMax: 5,
   },

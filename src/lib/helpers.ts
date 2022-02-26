@@ -2,6 +2,7 @@ import User from "../game/lib/user";
 import supabase from "./supabase";
 import type { User as SupabaseUser }from "@supabase/supabase-js"
 import Page from "../game/lib/resources/page";
+import Mineable from "../game/lib/resources/mineable";
 
 
 // takes a supabase user and returns one of ours.
@@ -76,22 +77,51 @@ export async function getUserSkills(userId: string) {
 export async function createPage(type: string, user: User) {
   try {
     const page = new Page({
-      type
+      type,
+      numberOfResources: 0
     });
-
+    
     // creates the SB page.
     const response = await supabase.from("pages")
       .insert([{
         created_by: user.id,
         type: type,
-        xpForConstruction: page.xpForConstruction
+        xpForConstruction: page.xpForConstruction,
+        numberOfResources: 0
       }]);
+
+    const resourceMax = Math.ceil(page.type.resourceMax);
+    const resourceMin = Math.floor(page.type.resourceMin);
+    const randomResourceAmount = Math.floor(Math.random() * (resourceMax - resourceMin + 1)) + resourceMin;
+    const resources = [];
+    for (let i = 0; i < randomResourceAmount; i++) {
+      const mineable = new Mineable({ type: "chainRemains" });
+      resources.push(mineable);
+    }
+
+    const resourcesForSupabase = resources.map((resource) => { 
+      return {
+        type: resource.type.name,
+        page_id: response.data[0].id
+      }
+    });
+
+    console.log(resourcesForSupabase);
+
+    await supabase.from("resources")
+      .insert(resourcesForSupabase);
+
+    await supabase.from("pages")
+      .update({ numberOfResources: resourcesForSupabase.length })
+      .eq("id", response.data[0].id);
 
     user.addXp("webmastering", page.xpForConstruction);
     await addXp(user.id, "webmastering", page.xpForConstruction);
+    
     return { page, user };
 
   } catch(error) {
+    console.log(error);
     return error;
   }
 } 
@@ -111,8 +141,22 @@ export async function getPage(pageId: string) {
         const page = new Page({
           id: record.id, 
           type: record.type,
+          numberOfResources: record.numberOfResources
         });
-        return page;
+
+        const resourceResponse = await supabase.from("resources")
+          .select("*")
+          .eq("page_id", page.id);
+
+        
+        const resources = resourceResponse.data.map((datum) => {
+          return new Mineable({
+            type: datum.type,
+            id: datum.id
+          });
+        });
+
+        return { page, resources };
       }
     }
   } catch(error) {

@@ -49,7 +49,7 @@ async function openPageCreator() {
             </a>
           </th>
           <td>{page.created_by}</td>
-          <td>0</td>
+          <td>{page.numberOfResources}</td>
         </tr>
       {/each}
       </tbody>

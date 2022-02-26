@@ -1,22 +1,21 @@
 import { types } from "../../utility/page";
 import type { PageType } from "../../utility/page";
 import type User from "../user";
-import Mineable from "./mineable";
 
 type PageOptions = {
-  // resources?: Mineable[];
+  numberOfResources: number;
   type: string;
   id?: string;
 }
 
 class Page {
-  resources: Mineable[];
+  numberOfResources: number;
   id: string;
   type: PageType;
   xpForConstruction: number;
   
   constructor(options: PageOptions) {
-    const { type, id } = options;
+    const { type, id, numberOfResources } = options;
 
     const pageType = types.find((presetType) => presetType.name === type);
     if (!pageType) {
@@ -27,23 +26,8 @@ class Page {
 
     this.id = id;
     this.xpForConstruction = pageType.xp;
-      
-    // generate the resources on the page.
+    this.numberOfResources = numberOfResources;
 
-    const resourceMax = Math.ceil(pageType.resourceMax);
-    const resourceMin = Math.floor(pageType.resourceMin);
-    const randomResourceAmount = Math.floor(Math.random() * (resourceMax - resourceMin + 1)) + resourceMin;
-
-    this.resources = [];
-    this.addRandomMineables(randomResourceAmount);
-      
-  }
-
-  addRandomMineables(quantity: number): void {
-    for (let i = 0; i < quantity; i++) {
-      const mineable = new Mineable();
-      this.resources.push(mineable);
-    }
   }
 }
 

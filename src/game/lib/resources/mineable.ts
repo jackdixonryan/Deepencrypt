@@ -4,22 +4,24 @@ import type { MineableType } from "../../utility/mineable";
 
 type MineableOptions = {
   type: string;
-  id: string;
+  id?: string;
 }
 
 class Mineable {
   type: MineableType;
-  id: string;
+  id?: string;
 
-  constructor(mineableOptions?: MineableOptions) {
+  constructor(mineableOptions: MineableOptions) {
     if (mineableOptions) {
       // deconstruct the type from the options. 
       const { type, id } = mineableOptions
+      if (id) {
+        this.id = id;
+      }
       const specifiedType = types.find((typeObj) => typeObj.name === type);
       // if the specified type is in the type library, it can be used.
       if (specifiedType) {
         this.type = specifiedType;
-        this.id = id;
         // if the specified type is not in the type library, it cannot be generated. 
       } else {
         throw new Error(`Type ${type} is not available.`);
