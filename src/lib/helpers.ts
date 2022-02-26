@@ -76,8 +76,6 @@ export async function getUserSkills(userId: string) {
 export async function createPage(type: string, user: User) {
   try {
     const page = new Page({
-      name: "",
-      user: user,
       type
     });
 
@@ -97,6 +95,30 @@ export async function createPage(type: string, user: User) {
     return error;
   }
 } 
+
+export async function getPage(pageId: string) {
+  try {
+    const { error, data } = await supabase.from("pages")
+      .select("*")
+      .eq("id", pageId);
+
+    if (error) {
+      console.log(error);
+      return null;
+    } else {
+      if (data.length === 1) {
+        const record = data[0];
+        const page = new Page({
+          id: record.id, 
+          type: record.type,
+        });
+        return page;
+      }
+    }
+  } catch(error) {
+    console.log(error);
+  }
+}
 
 export async function addXp(userId, skill, xp) { 
   const tree = await getUserSkills(userId);

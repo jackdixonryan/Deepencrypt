@@ -1,13 +1,15 @@
 
 <script lang="ts">
 import supabase from "$lib/supabase";
-import Page from "../../game/lib/resources/page";
 import { onMount } from "svelte";
 import { createPage } from "$lib/helpers";
 import { userStore } from "../../stores";
-let pages;
+import Creator from "../../components/pages/Creator.svelte";
+import { page } from "$app/stores";
 
+let pages;
 let currentUser; 
+let creatorOpen = false;
 
 onMount(async () => {
   const tablesCall = await supabase.from("pages").select("*").limit(50);
@@ -18,9 +20,10 @@ onMount(async () => {
   });
 });
 
-async function newPage() {
-  const { page, user } = await createPage("basic", currentUser);
-  userStore.set(user);
+async function openPageCreator() {
+  // const { page, user } = await createPage("basic", currentUser);
+  // userStore.set(user);
+  creatorOpen = true;
 }
 
 </script>
@@ -33,12 +36,20 @@ async function newPage() {
       <thead>
         <tr>
           <th>Page ID</th>
+          <th>Creator</th>
+          <th>Resource Count</th>
         </tr>
       </thead>
       <tbody>
       {#each pages as page}
         <tr>
-          <th>{page.id}</th>
+          <th>
+            <a href="/pages/{page.id}">
+              {page.id}
+            </a>
+          </th>
+          <td>{page.created_by}</td>
+          <td>0</td>
         </tr>
       {/each}
       </tbody>
@@ -51,5 +62,6 @@ async function newPage() {
   {/if}
 </section>
 <section>
-  <button on:click={newPage}>CREATE A PAGE</button>
+  <button on:click={openPageCreator}>CREATE A PAGE</button>
 </section>
+<Creator isOpen={creatorOpen} currentUser={currentUser}></Creator>

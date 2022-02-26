@@ -1,4 +1,3 @@
-import { generateId } from ".";
 import type { HarvestableType } from "../types";
 
 export interface MineableType extends HarvestableType {
@@ -15,7 +14,6 @@ export const types: MineableType[] = [
       { 
         item: {
           name: "chainRemain",
-          itemId: generateId(),
         },
         quantity: 1,
         probabilityToLoot: 0.5,
@@ -31,7 +29,6 @@ export const types: MineableType[] = [
       {
         item: { 
           name: "brokeAssChain",
-          itemId: generateId(),
         },
         quantity: 1,
         probabilityToLoot: 0.5,

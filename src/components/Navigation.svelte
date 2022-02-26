@@ -1,7 +1,7 @@
 
 <nav>
   <ul>
-    <li><a href="/directory" class="secondary">THE DIRECTORY</a></li>
+    <li><a href="/pages" class="secondary">THE DIRECTORY</a></li>
   </ul>
   <ul>
     <li><strong>ERWD PROSPECTING PROJECT</strong></li>

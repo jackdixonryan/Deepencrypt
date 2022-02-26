@@ -1,7 +1,6 @@
 import type { Yield } from "../../types";
 import { types } from "../../utility/mineable";
 import type { MineableType } from "../../utility/mineable";
-import User from "../user";
 
 type MineableOptions = {
   type: string;
@@ -12,7 +11,7 @@ class Mineable {
   type: MineableType;
   id: string;
 
-  constructor(mineableOptions: MineableOptions) {
+  constructor(mineableOptions?: MineableOptions) {
     if (mineableOptions) {
       // deconstruct the type from the options. 
       const { type, id } = mineableOptions
