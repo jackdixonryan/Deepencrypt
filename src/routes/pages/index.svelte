@@ -11,11 +11,7 @@
   });
 
   async function createPage() {
-    const page = new Page({
-      type: "",
-      name: "",
-      user: supabase.auth.user()
-    });
+
   }
 </script>
 
@@ -47,5 +43,5 @@
   {/if}
 </section>
 <section>
-  <button @click={createPage}>CREATE A PAGE</button>
+  <!-- <button @click={createPage}>CREATE A PAGE</button> -->
 </section>

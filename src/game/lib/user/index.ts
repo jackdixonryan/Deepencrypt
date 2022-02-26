@@ -4,18 +4,21 @@ import Inventory from "./inventory";
 
 class User {
   name: string;
-  email: string;
   titles: string[];
+  skillMatrix: SkillMatrix;
   inventory: Inventory;
   id: string;
   constructor(options: CharacterOptions) {
-    const { name, email, id } = options;
+    const { name, id, skillMatrix } = options;
     this.name = name;
     this.id = id;
-    this.email = email;
     this.titles = [];
     this.inventory = new Inventory();
-    this.skillTree ;
+    if (skillMatrix) {
+      this.skillMatrix = skillMatrix; 
+    } else {
+      this.skillMatrix = this.generateSkillTree();
+    }
   }
 
   generateSkillTree(): SkillMatrix {

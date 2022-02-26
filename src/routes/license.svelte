@@ -3,27 +3,27 @@ import { goto } from "$app/navigation";
 
 import supabase from "$lib/supabase";
 import type { User } from "@supabase/supabase-js";
-import { userStore } from "src/stores";
+import { userStore } from "../stores";
 import { onMount } from "svelte";
 
 let user: User;
-userStore.subscribe((change) => {
-  console.log("change");
-});
+let player;
 
 onMount(() => {
   user = supabase.auth.user();
+  userStore.subscribe((userRecord) => {
+    player = userRecord;
+  });
 });
 </script>
 
-{#if user}
+{#if user && player}
 <section>
   <!-- <h1>{}</h1> -->
   <article>
     Welcome to your new profile. I'm pleased that you decided to join us - it is free, after all, so why not? You have been issued a license to prospect this site. This license bears with it a license number. Your license number is your identifier on this site, and it will be the source of truth for everything about you - your currency balance, your skill rankings, your pages, your titles, and your achievements. Go ahead and take a look.
   </article>
 
-  {#if user}
   <article>
     <header>
       <hgroup>
@@ -40,15 +40,11 @@ onMount(() => {
     </ul>
     <h4>SKILLS</h4>
       <ul>
-        <li>WEBMASTERING: 0</li>
-        <li>MINING: 0</li>
+        {#each Object.entries(player.skillMatrix) as [skillName, xp]}
+          <li>{ skillName }: { xp }</li>
+        {/each}
       </ul>
-    <h4>TITLES</h4>
-    <ul>
-      <li>THE INITIATE</li>
-    </ul>
   </article>
-  {/if}
 
   <article>
     <p>So, you haven't trained any skills yet. That's alright. You haven't got a toolbar yet, that's probably part of the problem. When you're ready, click the button to begin the toolbar tutorial and start your journey toward prosperity.</p>

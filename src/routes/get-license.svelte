@@ -1,32 +1,32 @@
 
 <script lang="ts">
 import { goto } from "$app/navigation";
+import { createGameUser } from "$lib/helpers";
+import supabase from "$lib/supabase";
 
-  import supabase from "$lib/supabase";
+let errorMessage: string;
+let email: string;
+let password: string;
+let passwordConfirmation: string;
 
-  let errorMessage: string;
-  let email: string;
-  let password: string;
-  let passwordConfirmation: string;
+async function getLicense(): Promise<void> {
+  if (!email || !password || !passwordConfirmation) {
+    errorMessage = `All three fields are required to obtain a license.`;
+  } else if (password !== passwordConfirmation) {
+    errorMessage = `Passwords do not match.`;
+  } else {
+    const { user, error } = await supabase.auth.signUp({
+      email, password
+    });
 
-  async function getLicense(): Promise<void> {
-    if (!email || !password || !passwordConfirmation) {
-      errorMessage = `All three fields are required to obtain a license.`;
-    } else if (password !== passwordConfirmation) {
-      errorMessage = `Passwords do not match.`;
+    if (error) {
+      errorMessage = error.message;
     } else {
-      const { user, error } = await supabase.auth.signUp({
-        email, password
-      });
-
-      if (error) {
-        errorMessage = error.message;
-      } else {
-        await createUser(user);
-        goto("/license");
-      }
+      await createGameUser(user);
+      goto("/license");
     }
   }
+}
 </script>
 
 <section>

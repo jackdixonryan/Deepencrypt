@@ -1,7 +1,6 @@
 
 export interface CharacterOptions { 
   name: string;
-  email: string;
   skillMatrix?: SkillMatrix;
   id: string;
 }
