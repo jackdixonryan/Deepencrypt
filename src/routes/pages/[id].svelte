@@ -10,28 +10,39 @@
   import { addXp, getPage } from "../../lib/helpers";
   import { onMount } from "svelte";
   import { userStore } from "../../stores";
+  import type Mineable from "../../game/lib/resources/mineable";
+  import type Page from "../../game/lib/resources/page";
+  import type User from "../../game/lib/user";
+  import type { Yield } from "../../game/types";
 
-  export let id;
-  let page; 
-  let user;
-  let resources;
-  let currentResource;
+  export let id: string;
+  let page: Page; 
+  let user: User;
+  let resources: Mineable[];
+  let currentResource: Mineable;
   let miningIntervalId;
 
-  userStore.subscribe((value) => {
+  userStore.subscribe((value: User) => {
     user = value;
   });
 
   onMount(async () => {
-    const response = await getPage(id);
+    const response: { page: Page, resources: Mineable[] } = await getPage(id);
     page = response.page;
     resources = response.resources;
   });
 
   function harvestResource(e) {
-    const resource = resources.find((r) => r.id === e.target.id);
+    const resource: Mineable = resources.find((r: Mineable) => r.id === e.target.id);
     currentResource = resource;
     miningIntervalId = setInterval(async () => {
+      const loot: Yield[] = currentResource.harvest();
+      if (loot.length > 0) {
+        loot.forEach((item: Yield) => {
+          console.log({ item });
+          user.inventory.addItem({ itemId: item.name, quantity: item.quantity });
+        });        
+      }
       await addXp(user.id, "mining", resource.type.xp);
       user.addXp("mining", resource.type.xp);
       userStore.set(user);

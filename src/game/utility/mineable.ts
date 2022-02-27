@@ -12,11 +12,9 @@ export const types: MineableType[] = [
     timeToComplete: 1,
     yields: [
       { 
-        item: {
-          name: "chainRemain",
-        },
-        quantity: 1,
-        probabilityToLoot: 0.5,
+        name: "basic-data-packet", 
+        quantity: 1, 
+        probabilityToLoot: 0.1,
       }
     ]
   },
@@ -27,11 +25,9 @@ export const types: MineableType[] = [
     timeToComplete: 0.1,
     yields: [
       {
-        item: { 
-          name: "dataFragment",
-        },
+        name: "snarled-data-packet",
         quantity: 1,
-        probabilityToLoot: 0.5,
+        probabilityToLoot: 0.1,
       }
     ]
   },

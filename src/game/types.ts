@@ -1,8 +1,10 @@
+import type Inventory from "./lib/user/inventory";
 
 export interface CharacterOptions { 
   name: string;
   skillMatrix?: SkillMatrix;
   id: string;
+  inventory: Inventory;
 }
 
 export interface Daemon {
@@ -36,11 +38,13 @@ export interface HarvestableType extends ResourceType {
 }
 
 export interface Yield { 
-  item: Item;
+  name: string;
   quantity: number;
   probabilityToLoot: number;
 }
 
 export interface Item {
   name: string; 
+  equippable: boolean;
+  equipSlot: string;
 }

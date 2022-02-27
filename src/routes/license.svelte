@@ -105,7 +105,7 @@ function createChartData(skillArray) {
           {/each}
         </ul>
         <div class="flex-child">
-          <Donut data={chartData} width={50} height={50} options={{ maintainAspectRatio: false }}></Donut>
+          <Donut data={chartData} width={50} height={50} options={{ maintainAspectRatio: false, legend: { display: false} }}></Donut>
         </div>
     </div>
   </article>

@@ -29,25 +29,15 @@ class Mineable {
     }
   }
 
-  async harvest(): Promise<{ xp: number; haul: Yield[] }> {
-    return new Promise((resolve, reject) => {
-      const haul: Yield[] = [];
-      this.type.yields.forEach((item) => {
-        const randomRoll: number = Math.random();
-        if (item.probabilityToLoot >= randomRoll) { 
-          haul.push(item);
-        }
-      });
-
-      const timeToComplete = this.type.timeToComplete;
-
-      setTimeout(() => {
-        resolve({
-          xp: this.type.xp,
-          haul
-        });
-      }, timeToComplete * 100);
+  harvest(): Yield[] {
+    const loot: Yield[] = [];
+    this.type.yields.forEach((item) => {
+      const randomRoll: number = Math.random();
+      if (item.probabilityToLoot >= randomRoll) { 
+        loot.push(item);
+      }
     });
+    return loot;
   }
 }
 

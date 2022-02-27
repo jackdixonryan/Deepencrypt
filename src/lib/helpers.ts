@@ -3,6 +3,7 @@ import supabase from "./supabase";
 import type { User as SupabaseUser }from "@supabase/supabase-js"
 import Page from "../game/lib/resources/page";
 import Mineable from "../game/lib/resources/mineable";
+import Inventory from "../game/lib/user/inventory";
 
 
 // takes a supabase user and returns one of ours.
@@ -14,6 +15,7 @@ export async function createGameUser(user: SupabaseUser) {
     name: null,
     id: user.id,
     skillMatrix: skills,
+    inventory: new Inventory()
   });
 
   try {
@@ -21,6 +23,7 @@ export async function createGameUser(user: SupabaseUser) {
       .insert([{
         id: gameUser.id,
         skill_tree_id: skills.id,
+        inventory: JSON.stringify(gameUser.inventory.slots)
       }]);
   } catch(error) {
     console.log(error);
@@ -49,10 +52,12 @@ export async function fetchGameUser(userId) {
     if (players.length === 1) {
       const playerRecord = players[0];
       const skills = await getUserSkills(userId);
+      console.log(playerRecord.inventory);
       const player = new User({
         name: null,
         id: playerRecord.id,
-        skillMatrix: skills
+        skillMatrix: skills,
+        inventory: new Inventory(playerRecord.inventory)
       });
       return player;
     } else {
@@ -105,8 +110,6 @@ export async function createPage(type: string, user: User) {
         page_id: response.data[0].id
       }
     });
-
-    console.log(resourcesForSupabase);
 
     await supabase.from("resources")
       .insert(resourcesForSupabase);
