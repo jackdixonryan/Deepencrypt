@@ -1,16 +1,17 @@
 <script lang="ts">
 import { goto } from "$app/navigation";
-
 import supabase from "$lib/supabase";
 import type { User } from "@supabase/supabase-js";
 import { userStore } from "../stores";
 import { onMount } from "svelte";
 import { xpToLevel } from "../game/utility/xp";
+import Donut from "svelte-chartjs/src/Doughnut.svelte";
 
 let user: User;
 let player;
 let skills;
 let totalLevel;
+let chartData;
 
 onMount(() => {
   user = supabase.auth.user();
@@ -19,6 +20,7 @@ onMount(() => {
     if (player) {
       skills = createSkillArray(userRecord);
       totalLevel = getTotalLevel(skills);
+      chartData = createChartData(skills);
     }
   });
 });
@@ -44,6 +46,34 @@ function getTotalLevel(skillArray) {
     return prev + curr.level;
   }, 0)
 }
+
+function createChartData(skillArray) {
+  let chartData = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
+        hoverBackgroundColor: [
+          "#FF5A5E",
+          "#5AD3D1",
+          "#FFC870",
+          "#A8B3C5",
+          "#616774"
+        ]
+      }
+    ]
+  }
+
+  skillArray.forEach((skill) => {
+    const { name, xp } = skill;
+    chartData.labels.push(name);
+    chartData.datasets[0].data.push(xp);
+  });
+
+  return chartData;
+
+}
 </script>
 
 {#if user && player}
@@ -68,17 +98,24 @@ function getTotalLevel(skillArray) {
       <li>LAST SEEN: {user.last_sign_in_at}</li>
     </ul>
     <h4>SKILLS</h4>
-      <ul>
-        {#each skills as skill}
-          <li>{ skill.name }: { skill.level } ({ skill.xp } XP)</li>
-        {/each}
-      </ul>
+      <div class="flex-wrapper">
+        <ul class="flex-child">
+          {#each skills as skill}
+            <li>{ skill.name }: { skill.level } ({ skill.xp } XP)</li>
+          {/each}
+        </ul>
+        <div class="flex-child">
+          <Donut data={chartData} width={50} height={50} options={{ maintainAspectRatio: false }}></Donut>
+        </div>
+    </div>
   </article>
 
+  {#if totalLevel === 9}
   <article>
     <p>So, you haven't trained any skills yet. That's alright. You haven't got a toolbar yet, that's probably part of the problem. When you're ready, click the button to begin the toolbar tutorial and start your journey toward prosperity.</p>
     <a href="/introduction/toolbar"><button>START TUTORIAL</button></a>
   </article>
+  {/if}
 </section>
 {:else}
 <section>
@@ -97,3 +134,13 @@ function getTotalLevel(skillArray) {
   </article>
 </section>
 {/if}
+
+<style>
+  .flex-wrapper {
+    display: flex;
+  }
+
+  .flex-child {
+    flex: 1
+  }
+</style>
