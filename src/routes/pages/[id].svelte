@@ -40,9 +40,8 @@
       const loot: Yield[] = currentResource.harvest();
       if (loot.length > 0) {
         loot.forEach(async (item: Yield) => {
-          console.log({ item });
           user.inventory.addItem({ itemId: item.name, quantity: item.quantity });
-          await updateUserInventory(user.id);
+          await updateUserInventory(user.id, user.inventory);
         });        
       }
       await updateUserExperience(user.id, "mining", resource.type.xp);

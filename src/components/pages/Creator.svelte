@@ -15,7 +15,6 @@ let webmasteringLevel = 0;
 
 onMount(() => {
   userStore.subscribe((user) => { 
-    console.log({ user });
     if (user) {
       webmasteringLevel = getLevel(user.skillMatrix["webmastering"]);
     }

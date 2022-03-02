@@ -52,7 +52,7 @@ export async function getUserSkills(userId: string): Promise<SkillMatrix> {
   }
 }
 
-export async function createUser(user: SupabaseUser) {
+export async function createUser(user: SupabaseUser): Promise<User> {
   const skills = await createUserSkills(user.id);
   const gameUser: User = new User({
     name: null,
@@ -73,7 +73,7 @@ export async function createUser(user: SupabaseUser) {
         throw new Error(error.message);
       }
 
-      return data;
+      return gameUser;
   } catch (error) {
     throw new Error(error);
   }
@@ -84,27 +84,30 @@ export async function createUserSkills(userId: string) {
     .insert([{ "id": userId }]);
 
   if (error) {
-    console.log(error);
-    return null;
+    throw new Error(error.message);
   } else {
     return data[0];
   }
 }
 
-export async function updateUserInventory(userId: string) {
-  const { error, data } = await db.from("players")
-    .select("inventory")
-    .eq("id", userId);
+export async function updateUserInventory(userId: string, inventory: Inventory) {
+  try {
+    const jsonInventory: string = JSON.stringify(inventory.slots);
+    const { data, error } = await db.from("players")
+      .update({ inventory: jsonInventory })
+      .eq("id", userId);
 
-  if (error) {
-    throw new Error(error.message);
-  } 
+    if (error) {
+      throw new Error(error.message);
+    }
 
-  console.log(data);
-
+    return data[0];
+  } catch (error) {
+    throw new Error(error);
+  }
 }
 
-export async function updateUserExperience(userId: string, skill: string, xp: number) {
+export async function updateUserExperience(userId: string, skill: string, xp: number): Promise<User> {
   const skillMatrix = await getUserSkills(userId);
   let newExperienceQuantity: number;
   if (skillMatrix) {
@@ -118,14 +121,12 @@ export async function updateUserExperience(userId: string, skill: string, xp: nu
         throw new Error(error.message);
       } 
 
-      return data;
+      // exit all updates called from svelte pages with the object itself. This will help make our store management a little simpler. 
+      const user = await getUser(userId);
+      return user;
 
     } catch (error) {
       throw new Error(error);
     }
   }
-}
-
-export async function deleteUser() {
-
 }

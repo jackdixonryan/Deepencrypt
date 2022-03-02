@@ -10,7 +10,6 @@
   let oldVal;
   let newVal;
 
-
   userStore.subscribe((value) => {
     if (value) {
       const { skillMatrix } = value;
