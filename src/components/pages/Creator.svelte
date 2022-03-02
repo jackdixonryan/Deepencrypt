@@ -5,7 +5,7 @@ export let currentUser;
 import { types } from "$lib/helpers/page";
 import { xpToLevel } from "$lib/helpers/xp";
 import { userStore } from "../../stores";
-import { createPage } from "$lib/db/helpers";
+import { createPage } from "$lib/services/page.service";
 import { onMount } from "svelte";
 
 let selectedType;

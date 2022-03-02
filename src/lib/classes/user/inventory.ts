@@ -14,7 +14,7 @@ class Inventory {
 
     if (data) {
       const length = data.length;
-      if (length > 25) {
+      if (length > 50) {
         throw new Error("Too Many Items!");
       } else {
         for (let i = 0; i < data.length; i++) {

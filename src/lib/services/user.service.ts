@@ -16,11 +16,14 @@ export async function getUser(userId: string): Promise<User> {
     } 
 
     const userRecord = data[0];
+    const skillMatrix = await getUserSkills(userId);
+    const inventory = new Inventory(JSON.parse(userRecord.inventory));
+
     const user: User = new User({
       id: userRecord.id,
-      skillMatrix: await getUserSkills(userId), // create a service,
+      skillMatrix, 
       name: "",
-      inventory: new Inventory(userRecord.inventory), // create a service
+      inventory
     });
 
     return user;
@@ -88,12 +91,39 @@ export async function createUserSkills(userId: string) {
   }
 }
 
-export async function updateUserInventory(userId: string, field: string, value: string|number) {
+export async function updateUserInventory(userId: string) {
+  const { error, data } = await db.from("players")
+    .select("inventory")
+    .eq("id", userId);
+
+  if (error) {
+    throw new Error(error.message);
+  } 
+
+  console.log(data);
 
 }
 
-export async function updateUserExperience(useRId: string, skill: string, xp: number) {
-  
+export async function updateUserExperience(userId: string, skill: string, xp: number) {
+  const skillMatrix = await getUserSkills(userId);
+  let newExperienceQuantity: number;
+  if (skillMatrix) {
+    newExperienceQuantity = skillMatrix[skill] + xp;
+    try {
+      const { data, error } = await db.from("skill_trees")
+        .update({ [skill]: newExperienceQuantity })
+        .eq("id", userId);
+
+      if (error) {
+        throw new Error(error.message);
+      } 
+
+      return data;
+
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 }
 
 export async function deleteUser() {

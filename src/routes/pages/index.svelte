@@ -1,11 +1,9 @@
 
 <script lang="ts">
-import supabase from "$lib/db/supabase";
+import supabase from "$lib/db";
 import { onMount } from "svelte";
-import { createPage } from "$lib/db/helpers";
 import { userStore } from "../../stores";
 import Creator from "../../components/pages/Creator.svelte";
-import { page } from "$app/stores";
 
 let pages;
 let currentUser; 
@@ -21,8 +19,6 @@ onMount(async () => {
 });
 
 async function openPageCreator() {
-  // const { page, user } = await createPage("basic", currentUser);
-  // userStore.set(user);
   creatorOpen = true;
 }
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-import supabase from "$lib/db/supabase";
+import supabase from "$lib/db";
 import type { User } from "@supabase/supabase-js";
 import { userStore } from "../stores";
 import { onMount } from "svelte";
@@ -17,6 +17,7 @@ onMount(() => {
   userStore.subscribe((userRecord) => {
     player = userRecord;
     if (player) {
+      console.log({ player });
       skills = createSkillArray(userRecord);
       totalLevel = getTotalLevel(skills);
       chartData = createChartData(skills);
