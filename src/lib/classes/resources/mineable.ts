@@ -1,6 +1,6 @@
 import type { Yield } from "../../types";
-import { types } from "../../utility/mineable";
-import type { MineableType } from "../../utility/mineable";
+import { types } from "../../helpers/mineable";
+import type { MineableType } from "../../helpers/mineable";
 
 type MineableOptions = {
   type: string;

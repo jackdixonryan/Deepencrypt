@@ -3,7 +3,7 @@
   import { goto } from "$app/navigation";
   import { userStore } from "../stores";
   
-    import supabase from "$lib/supabase";
+    import supabase from "$lib/db/supabase";
   
     let errorMessage: string;
     let email: string;

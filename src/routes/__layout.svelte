@@ -3,8 +3,8 @@ import Navigation from "../components/Navigation.svelte";
 import Toolbar from "../components/Toolbar.svelte";
 import XpTooltip from "../components/XpTooltip.svelte";
 import { userStore } from "../stores/index";
-import supabase from "$lib/supabase";
-import { fetchGameUser } from "$lib/helpers";
+import supabase from "$lib/db/supabase";
+import { fetchGameUser } from "$lib/db/helpers";
 import { onMount } from "svelte";
 
 

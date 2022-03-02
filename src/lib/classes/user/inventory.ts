@@ -8,13 +8,13 @@ interface ItemSummary {
 class Inventory {
   slots: (ItemSummary|null)[];
   constructor(data?: ItemSummary[]) { 
-    this.slots = new Array(250);
+    this.slots = new Array(25);
     this.slots.fill(null);
     Object.seal(this.slots);
 
     if (data) {
       const length = data.length;
-      if (length > 250) {
+      if (length > 25) {
         throw new Error("Too Many Items!");
       } else {
         for (let i = 0; i < data.length; i++) {
@@ -28,7 +28,6 @@ class Inventory {
   addItem(item: ItemSummary) {
 
     // step 1: figure out if the item has already been registered, in which case we just need to modify quantity.
-    console.log({ item });
     const itemIndex = this.slots.findIndex((slot) => slot?.itemId === item.itemId);
     
     if (itemIndex !== -1) {

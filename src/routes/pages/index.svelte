@@ -1,8 +1,8 @@
 
 <script lang="ts">
-import supabase from "$lib/supabase";
+import supabase from "$lib/db/supabase";
 import { onMount } from "svelte";
-import { createPage } from "$lib/helpers";
+import { createPage } from "$lib/db/helpers";
 import { userStore } from "../../stores";
 import Creator from "../../components/pages/Creator.svelte";
 import { page } from "$app/stores";

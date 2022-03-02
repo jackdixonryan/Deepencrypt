@@ -1,4 +1,4 @@
-import type Inventory from "./lib/user/inventory";
+import type Inventory from "../lib/classes/user/inventory";
 
 export interface CharacterOptions { 
   name: string;

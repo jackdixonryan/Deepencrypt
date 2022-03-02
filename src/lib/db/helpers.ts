@@ -1,9 +1,9 @@
-import User from "../game/lib/user";
-import supabase from "./supabase";
+import User from "../classes/user";
+import supabase from ".";
 import type { User as SupabaseUser }from "@supabase/supabase-js"
-import Page from "../game/lib/resources/page";
-import Mineable from "../game/lib/resources/mineable";
-import Inventory from "../game/lib/user/inventory";
+import Page from "../classes/resources/page";
+import Mineable from "../classes/resources/mineable";
+import Inventory from "../classes/user/inventory";
 
 
 // takes a supabase user and returns one of ours.
@@ -192,4 +192,22 @@ export async function addXp(userId, skill, xp) {
       return data;
     }
   } 
+}
+
+export async function updateInventory(userId: string, inventory: Inventory) {
+  try {
+    const { data, error } = await supabase
+      .from("players")
+      .update({ inventory: JSON.stringify(inventory.slots) }) 
+      .eq("id", userId);
+
+    if (error) {
+      console.log(error);
+    }
+
+    return data;
+
+  } catch(error) { 
+    console.log(error);
+  }
 }

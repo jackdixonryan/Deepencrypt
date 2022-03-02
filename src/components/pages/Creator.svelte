@@ -1,10 +1,11 @@
 <script lang="ts">
 export let isOpen: boolean;
 export let currentUser;
-import { types } from "../../game/utility/page";
-import { xpToLevel } from "../../game/utility/xp";
+
+import { types } from "$lib/helpers/page";
+import { xpToLevel } from "$lib/helpers/xp";
 import { userStore } from "../../stores";
-import { createPage } from "../../lib/helpers";
+import { createPage } from "$lib/db/helpers";
 import { onMount } from "svelte";
 
 let selectedType;

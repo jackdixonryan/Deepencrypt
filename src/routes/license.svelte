@@ -1,10 +1,9 @@
 <script lang="ts">
-import { goto } from "$app/navigation";
-import supabase from "$lib/supabase";
+import supabase from "$lib/db/supabase";
 import type { User } from "@supabase/supabase-js";
 import { userStore } from "../stores";
 import { onMount } from "svelte";
-import { xpToLevel } from "../game/utility/xp";
+import { xpToLevel } from "$lib/helpers/xp";
 import Donut from "svelte-chartjs/src/Doughnut.svelte";
 
 let user: User;

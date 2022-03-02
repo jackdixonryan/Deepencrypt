@@ -7,13 +7,13 @@
 </script>
 
 <script lang="ts">
-  import { addXp, getPage } from "../../lib/helpers";
+  import { addXp, getPage, updateInventory } from "../../lib/db/helpers";
   import { onMount } from "svelte";
   import { userStore } from "../../stores";
-  import type Mineable from "../../game/lib/resources/mineable";
-  import type Page from "../../game/lib/resources/page";
-  import type User from "../../game/lib/user";
-  import type { Yield } from "../../game/types";
+  import type Mineable from "$lib/classes/resources/mineable";
+  import type Page from "$lib/classes/resources/page";
+  import type User from "$lib/classes/user";
+  import type { Yield } from "$lib/types";
 
   export let id: string;
   let page: Page; 
@@ -38,9 +38,10 @@
     miningIntervalId = setInterval(async () => {
       const loot: Yield[] = currentResource.harvest();
       if (loot.length > 0) {
-        loot.forEach((item: Yield) => {
+        loot.forEach(async (item: Yield) => {
           console.log({ item });
           user.inventory.addItem({ itemId: item.name, quantity: item.quantity });
+          await updateInventory(user.id, user.inventory);
         });        
       }
       await addXp(user.id, "mining", resource.type.xp);

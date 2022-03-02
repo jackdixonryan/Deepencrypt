@@ -1,8 +1,8 @@
 
 <script lang="ts">
 import { goto } from "$app/navigation";
-import { createGameUser } from "$lib/helpers";
-import supabase from "$lib/supabase";
+import { createGameUser } from "$lib/db/helpers";
+import supabase from "$lib/db/supabase";
 
 let errorMessage: string;
 let email: string;
