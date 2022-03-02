@@ -1,5 +1,5 @@
-import { types } from "../../utility/page";
-import type { PageType } from "../../utility/page";
+import { types } from "../../helpers/page";
+import type { PageType } from "../../helpers/page";
 import type User from "../user";
 
 type PageOptions = {

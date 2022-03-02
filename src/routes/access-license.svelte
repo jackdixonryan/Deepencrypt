@@ -3,25 +3,25 @@
   import { goto } from "$app/navigation";
   import { userStore } from "../stores";
   
-    import supabase from "$lib/supabase";
+  import supabase from "$lib/db";
   
-    let errorMessage: string;
-    let email: string;
-    let password: string;
-  
-    async function getLicense(): Promise<void> {
-      const { user, error } = await supabase.auth.signIn({
-        email, password
-      });
-  
-      if (error) {
-        errorMessage = error.message;
-      } else {
-        userStore.set(user);
-        goto("/license");
-      }
+  let errorMessage: string;
+  let email: string;
+  let password: string;
+
+  async function getLicense(): Promise<void> {
+    const { user, error } = await supabase.auth.signIn({
+      email, password
+    });
+
+    if (error) {
+      errorMessage = error.message;
+    } else {
+      userStore.set(user);
+      goto("/license");
     }
-  </script>
+  }
+</script>
   
   <section>
     <article>

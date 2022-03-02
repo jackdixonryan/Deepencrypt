@@ -1,18 +1,20 @@
 <script lang="ts">
+import { onMount } from "svelte";
+
 import Navigation from "../components/Navigation.svelte";
 import Toolbar from "../components/Toolbar.svelte";
 import XpTooltip from "../components/XpTooltip.svelte";
+
 import { userStore } from "../stores/index";
-import supabase from "$lib/supabase";
-import { fetchGameUser } from "$lib/helpers";
-import { onMount } from "svelte";
+import supabase from "$lib/db";
+import { getUser } from "$lib/services/user.service";
 
 
 onMount(async() => {
   const user = supabase.auth.user();
 
   if (user) {
-    const player = await fetchGameUser(user.id);
+    const player = await getUser(user.id);
     userStore.set(player);
   } else {
     console.log("WE have no USER");

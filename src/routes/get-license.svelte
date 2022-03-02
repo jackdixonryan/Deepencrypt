@@ -1,8 +1,8 @@
 
 <script lang="ts">
 import { goto } from "$app/navigation";
-import { createGameUser } from "$lib/helpers";
-import supabase from "$lib/supabase";
+import { createUser } from "$lib/services/user.service";
+import supabase from "$lib/db";
 
 let errorMessage: string;
 let email: string;
@@ -22,7 +22,7 @@ async function getLicense(): Promise<void> {
     if (error) {
       errorMessage = error.message;
     } else {
-      await createGameUser(user);
+      await createUser(user);
       goto("/license");
     }
   }

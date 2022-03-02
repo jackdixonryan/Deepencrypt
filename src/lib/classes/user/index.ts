@@ -1,5 +1,5 @@
 import type { CharacterOptions, SkillMatrix } from "../../types";
-import { xpToLevel } from "../../utility/xp";
+import { xpToLevel } from "../../helpers/xp";
 import type Inventory from "./inventory";
 
 class User {
