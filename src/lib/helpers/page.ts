@@ -18,6 +18,8 @@ export const types: PageType[] = [
       "chainRemains",
       "dataFragments"
     ],
+    description: "it's not much but it's a living.",
+    skill: "webmastering",
   },
   {
     name: "beginner",
@@ -31,6 +33,8 @@ export const types: PageType[] = [
       "dataFragments",
       "encryptedReferences"
     ],
+    description: "more stuff, more of the time!",
+    skill: "webmastering",
   },
   {
     name: "portal",
@@ -43,6 +47,8 @@ export const types: PageType[] = [
       "encryptedReferences",
       "corruptedMetadata"
     ],
+    skill: "webmastering",
+    description: "it goes to other places"
   },
   {
     name: "documentation",
@@ -54,7 +60,9 @@ export const types: PageType[] = [
     availableResources: [
       "encryptedReferences",
       "corruptedMetadata"
-    ]
+    ],
+    description: "we could read this, but we never do.",
+    skill: "webmastering"
   },
   {
     name: "intactBlock",
@@ -66,6 +74,8 @@ export const types: PageType[] = [
     availableResources: [
       "encryptedReferences",
       "corruptedMetadata"
-    ]
+    ],
+    skill: "webmastering",
+    description: "it's no chain, but it's a start."
   }
 ];

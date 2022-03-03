@@ -3,7 +3,8 @@
   import { createEventDispatcher, onMount } from "svelte";
   import { userStore } from "../stores";
   import type Inventory from "$lib/classes/user/inventory";
-  export let isOpen;
+  export let isOpen: boolean;
+  
   let user: User;
   let inventory: Inventory;
   onMount(() => {
