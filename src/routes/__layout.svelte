@@ -22,15 +22,20 @@ onMount(async() => {
 });
 </script>
 
-<main class="container">
-  <XpTooltip></XpTooltip>
-  <Navigation></Navigation>
-  <slot></slot>
-</main>
-<Toolbar />
+<div class="wrapper">
+  <main class="main-content">
+    <XpTooltip></XpTooltip>
+    <Navigation></Navigation>
+    <slot></slot>
+  </main>
+</div>
 
 <style>
-  main {
+  .wrapper {
     font-family: 'VT323', monospace;
+  }
+
+  .main-content {
+    padding: 1rem;
   }
 </style>
