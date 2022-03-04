@@ -1,40 +1,7 @@
-# create-svelte
+# DEEPENCRYPT 
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Many eons ago, a group of technologists, a veritable who's-who of tech-enlightment thinkers, pushed their wealth of knowledge to the ERWD repository. At around that same time, their world collapsed and their kingdoms crumbled into sand and sea. Fortunately for us, they departed without locking their knowledge away - entirely. Thus the ERWD repository sat for hundreds of years, unloved, unused, wild. 
 
-## Creating a project
+Until recently. 
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm init svelte@next
-
-# create a new project in my-app
-npm init svelte@next my-app
-```
-
-> Note: the `@next` is temporary
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Much of the old data is encrypted, hidden, encased in ruin. The once-shining ERWD repository is now a dark and dangerous place, crawling with bugs and daemons. Great riches and arcane knowledge can still be found deep within, and many entrepreneurs flock to the repository to extract whatever wealth they can. But they call the repository by a new name, a dark name: The deepencrypt. 
