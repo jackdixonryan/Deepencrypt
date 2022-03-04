@@ -16,7 +16,9 @@ export const types: MineableType[] = [
         quantity: 1, 
         probabilityToLoot: 0.1,
       }
-    ]
+    ],
+    description: "looks like the blockchain has broken down a little bit.",
+    skill: "mining"
   },
   {
     name: "dataFragments",
@@ -29,20 +31,26 @@ export const types: MineableType[] = [
         quantity: 1,
         probabilityToLoot: 0.1,
       }
-    ]
+    ],
+    skill: "mining",
+    description: "someone didn't refactor..."
   },
   {
     name: "encryptedReferences",
     requiredLevel: 11,
     xp: 4.5,
     timeToComplete: 1, 
-    yields: []
+    yields: [],
+    skill: "mining",
+    description: "a good codebreaker might be able to crack these."
   }, 
   {
     name: "corruptedMetadata",
     requiredLevel: 11,
     xp: 4.5,
     timeToComplete: 1,
-    yields: []
+    yields: [],
+    skill: "mining",
+    description: "at least only the metadata got corrupted"
   }
 ];

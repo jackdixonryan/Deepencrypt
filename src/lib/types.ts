@@ -30,6 +30,8 @@ export interface ResourceType {
   requiredLevel: number;
   xp: number;
   name: string;
+  skill: string;
+  description?: string;
   timeToComplete: number;
 }
 
@@ -47,4 +49,9 @@ export interface Item {
   name: string; 
   equippable: boolean;
   equipSlot: string;
+}
+
+export interface ItemSummary {
+  itemId: string;
+  quantity: number;
 }

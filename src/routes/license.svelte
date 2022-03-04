@@ -17,7 +17,6 @@ onMount(() => {
   userStore.subscribe((userRecord) => {
     player = userRecord;
     if (player) {
-      console.log({ player });
       skills = createSkillArray(userRecord);
       totalLevel = getTotalLevel(skills);
       chartData = createChartData(skills);

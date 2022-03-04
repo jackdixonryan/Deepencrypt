@@ -1,9 +1,4 @@
-import type { Item } from "../../types";
-
-interface ItemSummary {
-  itemId: string;
-  quantity: number;
-}
+import type { ItemSummary } from "../../types";
 
 class Inventory {
   slots: (ItemSummary|null)[];

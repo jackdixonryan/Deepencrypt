@@ -13,15 +13,13 @@
   import type Mineable from "$lib/classes/resources/mineable";
   import type Page from "$lib/classes/resources/page";
   import type User from "$lib/classes/user";
-  import type { Yield } from "$lib/types";
-  import { updateUserInventory, updateUserExperience } from "$lib/services/user.service";
+  import ContextMenu from "../../components/contextMenu/ContextMenu.svelte";
 
   export let id: string;
   let page: Page; 
   let user: User;
   let resources: Mineable[];
-  let currentResource: Mineable;
-  let miningIntervalId;
+
 
   userStore.subscribe((value: User) => {
     user = value;
@@ -33,31 +31,6 @@
     resources = response.resources;
   });
 
-  function harvestResource(e) {
-    const resource: Mineable = resources.find((r: Mineable) => r.id === e.target.id);
-    currentResource = resource;
-    miningIntervalId = setInterval(async () => {
-      const loot: Yield[] = currentResource.harvest();
-      if (loot.length > 0) {
-        loot.forEach(async (item: Yield) => {
-          console.log({ item });
-          user.inventory.addItem({ itemId: item.name, quantity: item.quantity });
-          await updateUserInventory(user.id);
-        });        
-      }
-      await updateUserExperience(user.id, "mining", resource.type.xp);
-      user.addXp("mining", resource.type.xp);
-      userStore.set(user);
-
-
-    }, resource.type.timeToComplete * 1000);
-  }
-
-  function stopHarvesting() {
-    clearInterval(miningIntervalId);
-    currentResource = null;
-  }
-
 </script>
 
 {#if page}
@@ -68,25 +41,18 @@
         <tr>
           <th>Resource ID</th>
           <th>Resource Type</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
         {#each resources as resource}
-          <tr>
-            <th>{resource.id}</th>
-            <td>{resource.type.name}</td>
-            <td>
-              {#if currentResource && currentResource.id === resource.id}
-                <button on:click={stopHarvesting} id={resource.id} class="contrast">STOP</button>
-              {:else}
-                <button on:click={harvestResource} id={resource.id}>HARVEST</button>
-              {/if}
-            </td>
+          <tr data-element={`mineable:${resource.id}`}>
+            <th data-element={`mineable:${resource.id}`}>{resource.id}</th>
+            <td data-element={`mineable:${resource.id}`}>{resource.type.name}</td>
           </tr>
         {/each}
       </tbody>
     </table>
+    <ContextMenu context={{ page, user, resources }}/>
   {:else}
     PAGE is DEAD
   {/if}
