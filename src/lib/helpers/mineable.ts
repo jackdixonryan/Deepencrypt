@@ -40,7 +40,13 @@ export const types: MineableType[] = [
     requiredLevel: 11,
     xp: 4.5,
     timeToComplete: 1, 
-    yields: [],
+    yields: [
+      { 
+        name: "nice-data-packet", 
+        quantity: 1, 
+        probabilityToLoot: 0.1,
+      }
+    ],
     skill: "mining",
     description: "a good codebreaker might be able to crack these."
   }, 
