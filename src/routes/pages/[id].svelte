@@ -9,7 +9,7 @@
 <script lang="ts">
   import { getPage } from "$lib/services/page.service";
   import { onMount } from "svelte";
-  import { userStore } from "../../stores";
+  import { contextMenuStore, userStore } from "../../stores";
   import type Mineable from "$lib/classes/resources/mineable";
   import type Page from "$lib/classes/resources/page";
   import type User from "$lib/classes/user";
@@ -25,10 +25,17 @@
     user = value;
   });
 
+
   onMount(async () => {
     const response: { page: Page, resources: Mineable[] } = await getPage(id);
     page = response.page;
     resources = response.resources;
+
+    contextMenuStore.update(contextMenuData => {
+      contextMenuData.currentPage = id;
+      contextMenuData.resourcesAvailable = resources;
+      return contextMenuData;
+    });
   });
 
 </script>
@@ -52,7 +59,7 @@
         {/each}
       </tbody>
     </table>
-    <ContextMenu context={{ page, user, resources }}/>
+    <ContextMenu />
   {:else}
     PAGE is DEAD
   {/if}

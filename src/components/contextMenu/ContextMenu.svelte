@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { getMenuOptions } from "./menu";
-
 	import Menu from "./Menu.svelte";	
 	import MenuOption from "./MenuOption.svelte";
-
-	export let context = { resources: [], user: null, page: null };
+	import { contextMenuStore } from "../../stores";
+	import { onMount } from "svelte";
 	
 	let pos = { x: 0, y: 0 };
 	let showMenu: boolean = false;
@@ -17,13 +16,28 @@
 		}
 		
 		pos = { x: e.clientX, y: e.clientY };
-		menuData = getMenuOptions(e, context);
+		menuData = getMenuOptions(e);
 		showMenu = true;
 	}
 	
 	function closeMenu() {
 		showMenu = false;
 	}
+
+	function handleMenuClick(option) {
+		option.method(menuData.resource, menuData.user);
+		const skilling = $contextMenuStore.userCurrentlySkilling;
+		if (skilling) {
+			$contextMenuStore.userCurrentlySkilling = false;
+		} else {
+			$contextMenuStore.userCurrentlySkilling = true;
+		}
+	}
+
+	onMount(() => {
+		console.log($contextMenuStore);
+	})
+
 </script>
 
 {#if showMenu}
@@ -32,8 +46,8 @@
 			<hr />
 			{#each menuData.options as option}
 				<MenuOption
-					isDisabled={false}
-					on:click={option.method(menuData.resource, menuData.user)}
+					isDisabled={option.disabled}
+					on:click={() => { handleMenuClick(option) }}
 					text={option.name}
 				/>
 			{/each}

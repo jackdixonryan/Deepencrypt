@@ -11,9 +11,9 @@ export const types: PageType[] = [
     name: "basic",
     requiredLevel: 1,
     xp: 98,
-    timeToComplete: 4,
+    timeToComplete: 10,
     resourceMin: 1,
-    resourceMax: 5,
+    resourceMax: 4,
     availableResources: [
       "chainRemains",
       "dataFragments"
@@ -25,9 +25,9 @@ export const types: PageType[] = [
     name: "beginner",
     requiredLevel: 5,
     xp: 114.5,
-    timeToComplete: 40,
-    resourceMin: 1, 
-    resourceMax: 6,
+    timeToComplete: 10,
+    resourceMin: 2, 
+    resourceMax: 8,
     availableResources: [
       "chainRemains",
       "dataFragments",
@@ -40,7 +40,7 @@ export const types: PageType[] = [
     name: "portal",
     requiredLevel: 7,
     xp: 125,
-    timeToComplete: 40,
+    timeToComplete: 10,
     resourceMin: 2,
     resourceMax: 6,
     availableResources: [
@@ -54,9 +54,9 @@ export const types: PageType[] = [
     name: "documentation",
     requiredLevel: 15,
     xp: 481.3,
-    timeToComplete: 160,
-    resourceMin: 4,
-    resourceMax: 10,
+    timeToComplete: 10,
+    resourceMin: 8,
+    resourceMax: 16,
     availableResources: [
       "encryptedReferences",
       "corruptedMetadata"
@@ -65,10 +65,10 @@ export const types: PageType[] = [
     skill: "webmastering"
   },
   {
-    name: "intactBlock",
-    requiredLevel: 30,
-    xp: 1481.5,
-    timeToComplete: 240,
+    name: "corruptedChain",
+    requiredLevel: 20,
+    xp: 1000,
+    timeToComplete: 10,
     resourceMin: 8,
     resourceMax: 16,
     availableResources: [
@@ -77,5 +77,93 @@ export const types: PageType[] = [
     ],
     skill: "webmastering",
     description: "it's no chain, but it's a start."
+  },
+  {
+    name: "intactChain",
+    requiredLevel: 30,
+    xp: 1481.5,
+    timeToComplete: 10,
+    resourceMin: 8,
+    resourceMax: 16,
+    availableResources: [
+      "intactBlock"
+    ],
+    skill: "webmastering",
+  },
+  {
+    name: "wellSecuredChain",
+    requiredLevel: 40,
+    xp: 2586,
+    timeToComplete: 10,
+    resourceMin: 8,
+    resourceMax: 16,
+    availableResources: [
+      "securedBlock",
+      "pristineMetadata"
+    ],
+    skill: "webmastering"
+  },
+  {
+    name: "unbrokenChain",
+    requiredLevel: 50,
+    xp: 4791.7,
+    timeToComplete: 10,
+    resourceMin: 8,
+    resourceMax: 16,
+    availableResources: [
+      "unbreakableBlock"
+    ],
+    skill: "webmastering"
+  },
+  {
+    name: "erwdExecutiveChain",
+    requiredLevel: 60,
+    xp: 7150.9,
+    timeToComplete: 10,
+    resourceMin: 8,
+    resourceMax: 16,
+    availableResources: [
+      "executiveBlock",
+      "erwdMetadata"
+    ],
+    skill: "webmastering"
+  },
+  {
+    name: "classifiedChain",
+    requiredLevel: 70,
+    xp: 10509.6,
+    timeToComplete: 10,
+    resourceMin: 8,
+    resourceMax: 16,
+    availableResources: [
+      "classifiedBlock",
+      "mightyHash"
+    ],
+    skill: "webmastering"
+  },
+  {
+    name: "foundationalChain",
+    requiredLevel: 75,
+    xp: 13913,
+    timeToComplete: 10,
+    resourceMax: 16,
+    resourceMin: 8,
+    availableResources: [
+      "foundationalBlock"
+    ],
+    skill: "webmastering"
+  },
+  {
+    name: "legendaryChain",
+    requiredLevel: 90,
+    xp: 20000,
+    timeToComplete: 10,
+    resourceMax: 16,
+    resourceMin: 8,
+    availableResources: [
+      "legendaryBlock",
+      "legendaryMetadata"
+    ],
+    skill: "webmastering"
   }
 ];

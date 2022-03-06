@@ -26,6 +26,7 @@
 		display: flex;
 		align-items: center;
 		grid-gap: 5px;
+		cursor: pointer;
 	}
 	div:hover {
 		background: #0002;

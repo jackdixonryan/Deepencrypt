@@ -8,8 +8,8 @@ export const types: MineableType[] = [
   {
     name: "chainRemains",
     requiredLevel: 1,
-    xp: 1.4,
-    timeToComplete: 1,
+    xp: 7,
+    timeToComplete: 5,
     yields: [
       { 
         name: "basic-data-packet", 
@@ -23,8 +23,8 @@ export const types: MineableType[] = [
   {
     name: "dataFragments",
     requiredLevel: 1,
-    xp: 1.4,
-    timeToComplete: 0.1,
+    xp: 7,
+    timeToComplete: 5,
     yields: [
       {
         name: "snarled-data-packet",
@@ -37,20 +37,207 @@ export const types: MineableType[] = [
   },
   {
     name: "encryptedReferences",
-    requiredLevel: 11,
-    xp: 4.5,
-    timeToComplete: 1, 
-    yields: [],
+    requiredLevel: 10,
+    xp: 22.5,
+    timeToComplete: 5, 
+    yields: [
+      { 
+        name: "nice-data-packet", 
+        quantity: 1, 
+        probabilityToLoot: 0.1,
+      }
+    ],
     skill: "mining",
     description: "a good codebreaker might be able to crack these."
   }, 
   {
     name: "corruptedMetadata",
-    requiredLevel: 11,
-    xp: 4.5,
-    timeToComplete: 1,
-    yields: [],
+    requiredLevel: 20,
+    xp: 34.7,
+    timeToComplete: 5,
+    yields: [
+      {
+        name: "corrupted-data-packet",
+        quantity: 1, 
+        probabilityToLoot: 0.1
+      }
+    ],
     skill: "mining",
     description: "at least only the metadata got corrupted"
+  },
+  {
+    name: "intactBlock",
+    requiredLevel: 30,
+    xp: 55.5,
+    timeToComplete: 5,
+    yields: [
+      {
+        name: "preserved-data-packet",
+        quantity: 1,
+        probabilityToLoot: 0.1,
+      }
+    ],
+    skill: "mining",
+    description: "but where is the old chain?"
+  }, 
+  {
+    name: "securedBlock",
+    requiredLevel: 40,
+    xp: 62.5,
+    timeToComplete: 5,
+    yields: [
+      {
+        name: "well-secured-packet",
+        quantity: 1,
+        probabilityToLoot: 0.1
+      }
+    ],
+    skill: "mining"
+  },
+  {
+    name: "pristineMetadata",
+    requiredLevel: 40,
+    xp: 62.5,
+    timeToComplete: 5,
+    yields: [
+      {
+        name: "pristine-data-packet",
+        quantity: 1,
+        probabilityToLoot: 0.1,
+      }
+    ],
+    skill: "mining"
+  },
+  {
+    name: "unbreakableBlock",
+    requiredLevel: 50,
+    xp: 83.3, 
+    timeToComplete: 5,
+    yields: [
+      {
+        name: "immutable-packet",
+        quantity: 1,
+        probabilityToLoot: 0.1,
+      }
+    ], 
+    skill: "mining"
+  },
+  {
+    name: "executiveBlock",
+    requiredLevel: 60,
+    xp: 97.2,
+    timeToComplete: 5,
+    yields: [
+      {
+        name: "vip-packet",
+        quantity: 1,
+        probabilityToLoot: 0.1
+      },
+      {
+        name: "uncommon-encryption",
+        quantity: 1,
+        probabilityToLoot: 0.01,
+      }
+    ],
+    skill: "mining"
+  },
+  {
+    name: "erwdMetadata", 
+    requiredLevel: 60,
+    xp: 97.2,
+    timeToComplete: 5,
+    yields: [
+      {
+        name: "erwd-packet",
+        quantity: 1,
+        probabilityToLoot: 0.1
+      }
+    ],
+    skill: "mining"
+  },
+  {
+    name: "classifiedBlock",
+    requiredLevel: 70,
+    xp: 131.9,
+    timeToComplete: 5,
+    yields: [
+      {
+        name: "classified-packet",
+        quantity: 1,
+        probabilityToLoot: 0.1
+      },
+      {
+        name: "rare-encryption",
+        quantity: 1,
+        probabilityToLoot: 0.01,
+      }
+    ],
+    skill: "mining"
+  },
+  {
+    name: "mightyHash",
+    requiredLevel: 70,
+    xp: 131.9,
+    timeToComplete: 5,
+    yields: [
+      {
+        name: "might-hash-packet",
+        quantity: 1,
+        probabilityToLoot: 0.1
+      }
+    ],
+    skill: "mining"
+  },
+  {
+    name: "foundationalBlock",
+    requiredLevel: 80,
+    xp: 152.7,
+    timeToComplete: 5,
+    yields: [
+      {
+        name: "foundational-data-packet",
+        quantity: 1,
+        probabilityToLoot: 0.1
+      },
+      {
+        name: "epic-encryption",
+        quantity: 1,
+        probabilityToLoot: 0.01
+      }
+    ],
+    skill: "mining"
+  },
+  {
+    name: "legendaryBlock",
+    requiredLevel: 90,
+    xp: 229.2,
+    timeToComplete: 5,
+    yields: [
+      {
+        name: "legendary-data-packet",
+        quantity: 1,
+        probabilityToLoot: 0.1
+      }, 
+      {
+        name: "legendary-encryption",
+        quantity: 1,
+        probabilityToLoot: 0.01,
+      },
+    ],
+    skill: "mining"
+  },
+  {
+    name: "legendaryMetadata",
+    requiredLevel: 90,
+    xp: 229.2,
+    timeToComplete: 5,
+    yields: [
+      {
+        name: "legendary-metadata-packet",
+        quantity: 1,
+        probabilityToLoot: 0.1,
+      }
+    ],
+    skill: "mining"
   }
 ];

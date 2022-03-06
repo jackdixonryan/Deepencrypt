@@ -18,6 +18,8 @@ export async function createPage(type: string, user: User) {
         xpForConstruction: page.xpForConstruction,
         numberOfResources: 0
       }]);
+
+    page.id = pageData[0].id; 
     
     const resources = generateRandomResources(page);
 
@@ -33,7 +35,7 @@ export async function createPage(type: string, user: User) {
     return { page, user }
     
   } catch (error) {
-    
+    console.error(error);
   }
 }
 
@@ -78,6 +80,7 @@ function generateRandomResources(page: Page): any[] {
   const resourceMin = Math.floor(page.type.resourceMin);
   const randomResourceAmount = Math.floor(Math.random() * (resourceMax - resourceMin + 1)) + resourceMin;
   const resources = [];
+  console.log({ randomResourceAmount });
   for (let i = 0; i < randomResourceAmount; i++) {
     const mineable = new Mineable({ type: generateRandomPermissibleType(page.type) });
     resources.push(mineable);

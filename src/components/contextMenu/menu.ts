@@ -4,12 +4,15 @@ import type Page from "$lib/classes/resources/page";
 import type User from "$lib/classes/user";
 import { updateUserExperience, updateUserInventory } from "$lib/services/user.service";
 import type { Yield } from "$lib/types";
-import { userStore } from "../../stores";
+import { contextMenuStore, userStore } from "../../stores";
 
 const key = {};
 export { key };
 let isMining: boolean; 
 let miningIntervalId;
+let context;
+
+contextMenuStore.subscribe((value) => context = value);
 
 interface Context { 
   resources: (Mineable|Craftable)[];
@@ -21,38 +24,40 @@ interface MenuOptions {
   type: string;
   resourceId: string;
   resource: (Mineable|Craftable);
-  options: { name: string; method: Function }[];
+  options: { name: string; method: Function, disabled: boolean }[];
   user: User;
 }
 
-
-export function getMenuOptions(e, context: Context): MenuOptions {
+export function getMenuOptions(e): MenuOptions {
+  console.log(context);
   const { target } = e;
-  const id = target.getAttribute("data-element");
-  if (id) {
-    const elements = id.split(":");
+
+  const dataElement = target.getAttribute("data-element");
+  if (dataElement) {
+    const [ type, resourceId ] = dataElement.split(":");
 
     // in the event that the element's Id can be construed as a clickable ID, we can use it.
-    if (elements.length === 2) {
-      const type = elements[0];
-      const resourceId = elements[1];
-      const resource = context.resources.find((resource) => resource.id === resourceId);
+    if (type && resourceId) {
+      const resource = context.resourcesAvailable.find((resource) => resource.id === resourceId);
+      console.log({ resource, type, resourceId });
 
-      switch(type) {
-        case "mineable": 
-          return {
-            type,
-            resourceId,
-            resource,
-            user: context.user,
-            options: [
-              { name: "mine", method: harvest },
-              { name: "stop mining", method: stopHarvesting }
-            ]
-          };
-        default:
-          break;
-      }
+        switch(type) {
+          case "mineable": 
+            return {
+              type,
+              resourceId,
+              resource,
+              user: context.user,
+              options: [
+                { name: "mine", method: harvest, disabled: canHarvest(resource) },
+                { name: "stop mining", method: stopHarvesting, disabled: canStopHarvesting() }
+              ]
+            };
+          default:
+            break;
+        }
+    } else {
+      console.error("The context menu did not target a resource.");
     }
   }
 }
@@ -73,11 +78,23 @@ function harvest(resource: Mineable, user: User) {
   }, resource.type.timeToComplete * 1000);
 }
 
-// function inspect(resource: Mineable) {
-//   // return resource.description;
-// }
-
 function stopHarvesting() {
   clearInterval(miningIntervalId);
   isMining = false;
+}
+
+function canHarvest(resource) {
+  if (context.userLevels["mining"] < resource.type.requiredLevel || context.userCurrentlySkilling) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function canStopHarvesting() {
+  if (context.userCurrentlySkilling) {
+    return false;
+  } else {
+    return true;
+  }
 }

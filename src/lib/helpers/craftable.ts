@@ -28,6 +28,6 @@ export const types: CraftableType[] = [
     requiredLevel: 1,
     skill: "crafting", 
     description: "if user !== me, then: !let in.",
-    timeToComplete: 1,
+    timeToComplete: 10,
   }
 ]

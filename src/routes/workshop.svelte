@@ -3,8 +3,12 @@
   import { onMount } from "svelte";
   import { userStore } from "../stores";
   import type Inventory from "$lib/classes/user/inventory";
+  import ContextMenu from "../components/contextMenu/ContextMenu.svelte";
+  import ScriptCreator from "../components/workshop/ScriptCreator.svelte";
+
   let user: User;
   let inventory: Inventory;
+
   onMount(() => {
     userStore.subscribe((value) => {
       if (value) {
@@ -13,44 +17,12 @@
       }
     });
   });
+
 </script>
 
 <h1 style="margin-bottom: 0.5rem;">THE WORKSHOP</h1>
 
 {#if inventory}
-<div class="flex-container">
-  <div class="inventory">
-    <article>
-      <header>
-        INVENTORY
-      </header>
-      {#each inventory.slots as inventoryItem}
-        {#if inventoryItem}
-          {inventoryItem.quantity}x {inventoryItem.itemId}
-        {/if}
-      {/each}
-    </article>
-  </div>
-  <div class="crafting">
-    <article>
-      <header>
-        CRAFT
-      </header>
-    </article>
-  </div>
-</div>
+<ScriptCreator />
+<ContextMenu />
 {/if}
-
-<style>
-  .flex-container { 
-    display: flex;
-  }
-
-  .inventory {
-    flex: 1;
-  }
-
-  .crafting {
-    flex: 1;
-  }
-</style>

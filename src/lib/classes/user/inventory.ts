@@ -51,6 +51,42 @@ class Inventory {
       }
     }
   }
+
+  removeItem(itemId: string, quantity: number, removedSoFar: number = 0): number {
+    const index = this.getItemIndex(itemId);
+    if (index === -1) {
+      throw new Error("CANNOT_REMOVE_WHAT_DOES_NOT_EXIST");
+    } else {
+      const { quantity: itemQuantity } = this.slots[index];
+      const remainder = itemQuantity - quantity;
+      if (remainder === 0) {
+        this.slots[index] = null;
+        return quantity;
+      } else if (remainder < 0) {
+        this.slots[index] = null;
+        const remainingToRemove = Math.abs(remainder);
+        // need to keep finding items because of multiple inventory stacks. 
+        this.removeItem(itemId, remainingToRemove, removedSoFar + this.slots[index].quantity);
+      } else {
+        this.slots[index].quantity -= quantity;
+        return quantity;
+      }
+    }
+  } 
+
+  getItem(itemId: string): ItemSummary|null {
+    const item = this.slots.find((itemSummary) => itemSummary?.itemId === itemId);
+    if (item) {
+      return item;
+    } else {
+      return null;
+    }
+  }
+
+  getItemIndex(itemId: string): number { 
+    const index = this.slots.findIndex((itemSummary) => itemSummary?.itemId === itemId);
+    return index;
+  }
   
   carrying(): number { 
     return this.slots.filter((slot) => slot !== null).length;
