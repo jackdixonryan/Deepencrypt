@@ -9,7 +9,6 @@
 	// whenever x and y is changed, restrict box to be within bounds
 	$: ((x, y) => {
 		if (!menuEl) return;
-		
 		const rect = menuEl.getBoundingClientRect();
 		x = Math.min(window.innerWidth - rect.width, x);
 		if (y > window.innerHeight - rect.height) y -= rect.height;

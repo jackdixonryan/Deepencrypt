@@ -34,7 +34,7 @@
       {#if user && inventory}
         {#each inventory.slots as slot} 
           {#if slot !== null}
-            <li>{slot.quantity}X { slot.itemId }</li>
+            <li data-element={`item-${slot.itemId}`}>{slot.quantity}X { slot.itemId }</li>
           {:else}
             <li>VOID</li>
           {/if}

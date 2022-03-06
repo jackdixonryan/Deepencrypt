@@ -9,7 +9,7 @@ export const types: MineableType[] = [
     name: "chainRemains",
     requiredLevel: 1,
     xp: 1.4,
-    timeToComplete: 1,
+    timeToComplete: 5,
     yields: [
       { 
         name: "basic-data-packet", 
@@ -24,7 +24,7 @@ export const types: MineableType[] = [
     name: "dataFragments",
     requiredLevel: 1,
     xp: 1.4,
-    timeToComplete: 0.1,
+    timeToComplete: 5,
     yields: [
       {
         name: "snarled-data-packet",

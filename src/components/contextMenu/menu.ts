@@ -67,7 +67,6 @@ function harvest(resource: Mineable, user: User) {
   miningIntervalId = setInterval(async () => {
     const loot: Yield[] = resource.harvest();
     if (loot.length > 0) {
-      console.log("LOOT DISCOVERED!")
       loot.forEach(async (item: Yield) => {
         user.inventory.addItem({ itemId: item.name, quantity: item.quantity });
         await updateUserInventory(user.id, user.inventory);

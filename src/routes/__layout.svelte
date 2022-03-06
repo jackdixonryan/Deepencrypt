@@ -2,7 +2,6 @@
 import { onMount } from "svelte";
 
 import Navigation from "../components/Navigation.svelte";
-import Toolbar from "../components/Toolbar.svelte";
 import XpTooltip from "../components/XpTooltip.svelte";
 
 import { contextMenuStore, userStore } from "../stores/index";
