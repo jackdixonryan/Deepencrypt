@@ -8,7 +8,7 @@ export const types: MineableType[] = [
   {
     name: "chainRemains",
     requiredLevel: 1,
-    xp: 1.4,
+    xp: 7,
     timeToComplete: 5,
     yields: [
       { 
@@ -23,7 +23,7 @@ export const types: MineableType[] = [
   {
     name: "dataFragments",
     requiredLevel: 1,
-    xp: 1.4,
+    xp: 7,
     timeToComplete: 5,
     yields: [
       {
@@ -38,8 +38,8 @@ export const types: MineableType[] = [
   {
     name: "encryptedReferences",
     requiredLevel: 10,
-    xp: 4.5,
-    timeToComplete: 1, 
+    xp: 22.5,
+    timeToComplete: 5, 
     yields: [
       { 
         name: "nice-data-packet", 
@@ -53,8 +53,8 @@ export const types: MineableType[] = [
   {
     name: "corruptedMetadata",
     requiredLevel: 20,
-    xp: 4.5,
-    timeToComplete: 1,
+    xp: 34.7,
+    timeToComplete: 5,
     yields: [
       {
         name: "corrupted-data-packet",
@@ -68,8 +68,8 @@ export const types: MineableType[] = [
   {
     name: "intactBlock",
     requiredLevel: 30,
-    xp: 1,
-    timeToComplete: 1,
+    xp: 55.5,
+    timeToComplete: 5,
     yields: [
       {
         name: "preserved-data-packet",
@@ -83,8 +83,8 @@ export const types: MineableType[] = [
   {
     name: "securedBlock",
     requiredLevel: 40,
-    xp: 1,
-    timeToComplete: 1,
+    xp: 62.5,
+    timeToComplete: 5,
     yields: [
       {
         name: "well-secured-packet",
@@ -97,8 +97,8 @@ export const types: MineableType[] = [
   {
     name: "pristineMetadata",
     requiredLevel: 40,
-    xp: 1,
-    timeToComplete: 1,
+    xp: 62.5,
+    timeToComplete: 5,
     yields: [
       {
         name: "pristine-data-packet",
@@ -111,8 +111,8 @@ export const types: MineableType[] = [
   {
     name: "unbreakableBlock",
     requiredLevel: 50,
-    xp: 1, 
-    timeToComplete: 1,
+    xp: 83.3, 
+    timeToComplete: 5,
     yields: [
       {
         name: "immutable-packet",
@@ -125,8 +125,8 @@ export const types: MineableType[] = [
   {
     name: "executiveBlock",
     requiredLevel: 60,
-    xp: 1,
-    timeToComplete: 1,
+    xp: 97.2,
+    timeToComplete: 5,
     yields: [
       {
         name: "vip-packet",
@@ -144,8 +144,8 @@ export const types: MineableType[] = [
   {
     name: "erwdMetadata", 
     requiredLevel: 60,
-    xp: 1,
-    timeToComplete: 1,
+    xp: 97.2,
+    timeToComplete: 5,
     yields: [
       {
         name: "erwd-packet",
@@ -158,8 +158,8 @@ export const types: MineableType[] = [
   {
     name: "classifiedBlock",
     requiredLevel: 70,
-    xp: 1,
-    timeToComplete: 1,
+    xp: 131.9,
+    timeToComplete: 5,
     yields: [
       {
         name: "classified-packet",
@@ -177,8 +177,8 @@ export const types: MineableType[] = [
   {
     name: "mightyHash",
     requiredLevel: 70,
-    xp: 1,
-    timeToComplete: 1,
+    xp: 131.9,
+    timeToComplete: 5,
     yields: [
       {
         name: "might-hash-packet",
@@ -191,8 +191,8 @@ export const types: MineableType[] = [
   {
     name: "foundationalBlock",
     requiredLevel: 80,
-    xp: 1,
-    timeToComplete: 1,
+    xp: 152.7,
+    timeToComplete: 5,
     yields: [
       {
         name: "foundational-data-packet",
@@ -210,8 +210,8 @@ export const types: MineableType[] = [
   {
     name: "legendaryBlock",
     requiredLevel: 90,
-    xp: 1,
-    timeToComplete: 1,
+    xp: 229.2,
+    timeToComplete: 5,
     yields: [
       {
         name: "legendary-data-packet",
@@ -229,8 +229,8 @@ export const types: MineableType[] = [
   {
     name: "legendaryMetadata",
     requiredLevel: 90,
-    xp: 1,
-    timeToComplete: 1,
+    xp: 229.2,
+    timeToComplete: 5,
     yields: [
       {
         name: "legendary-metadata-packet",
