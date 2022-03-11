@@ -3,9 +3,9 @@
   import type { CraftableType } from "$lib/helpers/craftable";
   import { userStore } from "../../stores";
   import Inventory from "../Inventory.svelte";
-import Craftable from "$lib/classes/resources/craftable";
-import { updateUserExperience, updateUserInventory } from "$lib/services/user.service";
-import type { Yield } from "$lib/types";
+  import Craftable from "$lib/classes/resources/craftable";
+  import { updateUserExperience, updateUserInventory } from "$lib/services/user.service";
+  import type { Yield } from "$lib/types";
 
   let selectedScript;
   let disabled: boolean = true;

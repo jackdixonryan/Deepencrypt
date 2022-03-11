@@ -13,6 +13,7 @@
   userStore.subscribe((value) => {
     if (value) {
       const { skillMatrix } = value;
+      console.log(value);
       const values = Object.entries(skillMatrix);
       if (currentSkills) {      
         for (let i = 0; i < currentSkills.length; i++) {''

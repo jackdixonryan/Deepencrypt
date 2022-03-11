@@ -31,15 +31,18 @@ class Inventory {
       if (stackQuantity + item.quantity < 500) {
         this.slots[itemIndex].quantity += item.quantity;
       } else { 
-        // if there's bleedover, add as much remainder as is needed. 
-        const remainder = 500 - (stackQuantity + item.quantity);
-        this.slots[itemIndex].quantity = 500;
-
         const slotIndex = this.slots.findIndex((slot) => slot === null);
         if (slotIndex === -1) {
           throw new Error("INVENTORY_FULL");
         } else {
-          this.slots[slotIndex] = { itemId: item.itemId, quantity: remainder };
+          if (item.quantity < 500) {
+            this.slots[slotIndex] = item;
+          } else {
+            // add a stack of 500, calc the remainder, go from there.
+            this.slots[slotIndex] = { itemId: item.itemId, quantity: 500 };
+            const itemRemaining = item.quantity - 500;
+            this.addItem({ itemId: item.itemId, quantity: itemRemaining });
+          }
         }
       }
     } else {
@@ -47,7 +50,14 @@ class Inventory {
       if (slotIndex === -1) {
         throw new Error("INVENTORY_FULL");
       } else {
-        this.slots[slotIndex] = item;
+        if (item.quantity < 500) {
+          this.slots[slotIndex] = item;
+        } else {
+          // add a stack of 500, calc the remainder, go from there.
+          this.slots[slotIndex] = { itemId: item.itemId, quantity: 500 };
+          const itemRemaining = item.quantity - 500;
+          this.addItem({ itemId: item.itemId, quantity: itemRemaining });
+        }
       }
     }
   }
@@ -66,7 +76,8 @@ class Inventory {
         this.slots[index] = null;
         const remainingToRemove = Math.abs(remainder);
         // need to keep finding items because of multiple inventory stacks. 
-        this.removeItem(itemId, remainingToRemove, removedSoFar + this.slots[index].quantity);
+        this.removeItem(itemId, remainingToRemove, removedSoFar);
+        return removedSoFar;
       } else {
         this.slots[index].quantity -= quantity;
         return quantity;
