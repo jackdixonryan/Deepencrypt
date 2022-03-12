@@ -11,9 +11,11 @@ interface TabulationStore {
   crafting: boolean;
 }
 
-interface GameStore { 
+export interface GameStore { 
   targetId: string;
   target: any;
+  currentId: string;
+  current: any;
   isMining: boolean;
   isScripting: boolean;
   isWebmastering: boolean;
@@ -24,6 +26,8 @@ interface GameStore {
   isDaemoning: boolean;
   isEncrypting: boolean;
   isDecrypting: boolean;
+  targetType: string;
+  currentType: string;
 }
 
 export const userStore: Writable<User> = writable(null);
@@ -41,6 +45,7 @@ export const tabulationStore: Writable<TabulationStore> = writable({
 export const gameStore: Writable<GameStore> = writable({ 
   targetId: null,
   target: null,
+  targetType: null,
   isMining: false,
   isScripting: false,
   isWebmastering: false,
@@ -51,5 +56,8 @@ export const gameStore: Writable<GameStore> = writable({
   isDaemoning: false,
   isEncrypting: false,
   isDecrypting: false,
+  current: null,
+  currentId: null,
+  currentType: null,
 });
 
