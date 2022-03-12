@@ -9,7 +9,7 @@
 <script lang="ts">
   import { getPage } from "$lib/services/page.service";
   import { onMount } from "svelte";
-  import { contextMenuStore, userStore } from "../../stores";
+  import { userStore } from "../../stores";
   import type Mineable from "$lib/classes/resources/mineable";
   import type Page from "$lib/classes/resources/page";
   import type User from "$lib/classes/user";
@@ -30,12 +30,6 @@
     const response: { page: Page, resources: Mineable[] } = await getPage(id);
     page = response.page;
     resources = response.resources;
-
-    contextMenuStore.update(contextMenuData => {
-      contextMenuData.currentPage = id;
-      contextMenuData.resourcesAvailable = resources;
-      return contextMenuData;
-    });
   });
 
 </script>
@@ -52,9 +46,9 @@
       </thead>
       <tbody>
         {#each resources as resource}
-          <tr data-element={`mineable:${resource.id}`}>
-            <th data-element={`mineable:${resource.id}`}>{resource.id}</th>
-            <td data-element={`mineable:${resource.id}`}>{resource.type.name}</td>
+          <tr data-element={resource.id} data-type={"mineable"}>
+            <th data-element={resource.id} data-type={"mineable"}>{resource.id}</th>
+            <td data-element={resource.id} data-type={"mineable"}>{resource.type.name}</td>
           </tr>
         {/each}
       </tbody>

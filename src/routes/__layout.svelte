@@ -4,7 +4,7 @@ import { onMount } from "svelte";
 import Navigation from "../components/Navigation.svelte";
 import XpTooltip from "../components/XpTooltip.svelte";
 
-import { contextMenuStore, userStore } from "../stores/index";
+import {  userStore } from "../stores/index";
 import supabase from "$lib/db";
 import { getUser } from "$lib/services/user.service";
 
@@ -15,17 +15,6 @@ onMount(async() => {
   if (user) {
     const player = await getUser(user.id);
     userStore.set(player);
-    if (!$contextMenuStore.user) {
-      contextMenuStore.set({
-        userCurrentlySkilling: false,
-        userLevels: player.getLevels(),
-        lastUserTarget: null,
-        lastUserMethod: null,
-        user: player,
-        currentPage: null,
-        resourcesAvailable: []
-      });  
-    }
   } else {
     console.log("WE have no USER");
   }

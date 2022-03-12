@@ -1,57 +1,98 @@
-import { gameStore } from "src/stores";
+import { gameStore } from "../../stores";
+import { getMineable, mine, stopMining, canHarvest } from "$lib/services/mineable.service";
+import type { GameStore } from "../../stores";
+import type Mineable from "$lib/classes/resources/mineable";
 
 const key = {};
 export { key };
 
-export function getMenuOptions(e) {
+export async function getMenuOptions(e): Promise<any> {
   const { target } = e;
 
-  const dataElement = target.getAttribute("data-element");
+  const elementId = target.getAttribute("data-element");
+  const dataType = target.getAttribute("data-type");
 
-  if (dataElement) {
+  if (elementId) {
     gameStore.update((gameState) => {
-      return { ...gameState, targetId: dataElement }
+      return { ...gameState, targetId: elementId, targetType: dataType }
     });
-    handleElement(dataElement);
+    const menuOptions = await handleElement(elementId, dataType);
+    return menuOptions;
+  } else {
+    return [];
   }
 }
 
-function handleElement(dataElement: string): any[] {
+async function handleElement(elementId: string, dataType: string): Promise<any[]> {
 
-  let menuOptions: any[];
+  const menuOptions: any[] = [];
+  let gameState: GameStore; 
+  gameStore.subscribe((store: GameStore) => {
+    gameState = store;
+  });
 
-  if (dataElement === "mineable") {
-    const mineableOptions = getMineableOptions();
-    menuOptions.push(mineableOptions);
+  if (dataType === "mineable") {
+ 
+    const mineableOptions = await getMineableOptions(gameState);
+    menuOptions.push(...mineableOptions);
 
-  } else if (dataElement === "scriptable") {
-    const scriptableOptions = getScriptableOptions();
-    menuOptions.push(scriptableOptions);
+  } else if (dataType === "scriptable") {
 
-  } else if (dataElement === "page") {
-    const pageOptions = getPageOptions();
-    menuOptions.push(pageOptions);
+    const scriptableOptions = getScriptableOptions(gameState);
+    menuOptions.push(...scriptableOptions);
 
-  } else if (dataElement === "encryptable") {
-    const encryptableOptions = getEncryptableOptions();
-    menuOptions.push(encryptableOptions);
+  } else if (dataType === "page") {
+
+    const pageOptions = getPageOptions(gameState);
+    menuOptions.push(...pageOptions);
+
+  } else if (dataType === "encryptable") {
+
+    const encryptableOptions = getEncryptableOptions(gameState);
+    menuOptions.push(...encryptableOptions);
   }
 
   return menuOptions;
 }
 
-function getMineableOptions() {
+// the following methods need to manage two things: 
+// 1. What MenuOptions are loaded to the menu? 
+// 2. What do the MenuOptions do? 
+// 3. Which Menu Options are selectable? 
+async function getMineableOptions(gameState: GameStore): Promise<any[]> {
+  // 1. Determine the options.   Remains to be seen whether the EXAMINE option belongs in the game options, or in the tabulation menus. 
+  const mineable: Mineable = await getMineable(gameState.targetId);
+  console.log({ mineable });
+  console.log(canHarvest(mineable));
 
+  const menuOptions = [
+    { 
+      text: "mine", 
+      disabled: !canHarvest(mineable), 
+      method: async () => { await mine(mineable) }
+    }, 
+    { 
+      text: "stop mining", 
+      disabled: true, 
+      method: () => { stopMining }
+    }, 
+    { 
+      text: "examine", 
+      disabled: false, 
+      method: () => { console.log("Method init"); } 
+    }
+  ];
+  return menuOptions;
 }
 
-function getScriptableOptions() {
-
+function getScriptableOptions(gameState: GameStore): any[] {
+  return [];
 }
 
-function getPageOptions() {
-  
+function getPageOptions(gameState: GameStore): any[] {
+  return [];
 }
 
-function getEncryptableOptions() {
-
+function getEncryptableOptions(gameState: GameStore): any[] {
+  return [];
 }
