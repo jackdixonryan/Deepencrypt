@@ -2,8 +2,9 @@
 	import { getMenuOptions } from "./menu";
 	import Menu from "./Menu.svelte";	
 	import MenuOption from "./MenuOption.svelte";
-	import { contextMenuStore } from "../../stores";
+	import { contextMenuStore, userStore } from "../../stores";
 	import { onMount } from "svelte";
+	import type User from "$lib/classes/user";
 	
 	let pos = { x: 0, y: 0 };
 	let showMenu: boolean = false;
@@ -17,6 +18,8 @@
 		
 		pos = { x: e.clientX, y: e.clientY };
 		menuData = getMenuOptions(e);
+		const ctx = new ContextMenuData();
+		console.log(ctx);
 		showMenu = true;
 	}
 	
@@ -34,9 +37,26 @@
 		}
 	}
 
+	class ContextMenuData {
+		user: User;
+		context: any;
+		constructor() {
+			this.user = this.getUser();
+			this.context = this.getContext();
+		}
+
+		getUser() {
+			return $userStore;
+		}
+
+		getContext() {
+			return $contextMenuStore;
+		}
+	}
+
 	onMount(() => {
 		console.log($contextMenuStore);
-	})
+	});
 
 </script>
 

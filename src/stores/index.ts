@@ -1,25 +1,55 @@
 import type User from "$lib/classes/user";
 import { writable, type Writable } from "svelte/store";
 
-export const userStore = writable(null);
-
-interface ContextMenuStore {
-  userCurrentlySkilling: boolean;
-  userLevels: any;
-  lastUserTarget: string;
-  lastUserMethod: string;
+interface NavigationStore {
   currentPage: string;
-  resourcesAvailable: any[];
-  user: User;
 }
 
-export const contextMenuStore: Writable<ContextMenuStore> = writable({
-  userCurrentlySkilling: false,
-  userLevels: null,
-  lastUserTarget: null,
-  lastUserMethod: null,
+interface TabulationStore {
+  inventory: boolean;
+  equipment: boolean;
+  crafting: boolean;
+}
+
+interface GameStore { 
+  targetId: string;
+  target: any;
+  isMining: boolean;
+  isScripting: boolean;
+  isWebmastering: boolean;
+  isHacking: boolean;
+  isBotnetting: boolean;
+  isBugHunting: boolean;
+  isNetworking: boolean;
+  isDaemoning: boolean;
+  isEncrypting: boolean;
+  isDecrypting: boolean;
+}
+
+export const userStore: Writable<User> = writable(null);
+
+export const navigationStore: Writable<NavigationStore> = writable({
   currentPage: null,
-  resourcesAvailable: [],
-  user: null,
+});
+
+export const tabulationStore: Writable<TabulationStore> = writable({
+  inventory: false,
+  equipment: false,
+  crafting: false,
+});
+
+export const gameStore: Writable<GameStore> = writable({ 
+  targetId: null,
+  target: null,
+  isMining: false,
+  isScripting: false,
+  isWebmastering: false,
+  isHacking: false,
+  isBotnetting: false,
+  isBugHunting: false,
+  isNetworking: false,
+  isDaemoning: false,
+  isEncrypting: false,
+  isDecrypting: false,
 });
 
