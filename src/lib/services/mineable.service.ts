@@ -2,7 +2,7 @@ import Mineable from "$lib/classes/resources/mineable";
 import type User from "$lib/classes/user";
 import db from "$lib/db";
 import type { Yield } from "$lib/types";
-import { userStore } from "../../stores";
+import { gameStore, userStore } from "../../stores";
 import { updateUserExperience, updateUserInventory } from "./user.service";
 
 let miningIntervalId;
@@ -28,6 +28,9 @@ export async function getMineable(mineableId: string): Promise<Mineable|null> {
 export async function mine(mineable: Mineable): Promise<void> {
   let user;
   userStore.subscribe((state) => user = state);
+  gameStore.update((state) => {
+    return { ...state, isMining: true }
+  });
   miningIntervalId = setInterval(async () => {
     const loot: Yield[] = mineable.harvest();
     if (loot.length > 0) {
@@ -39,11 +42,15 @@ export async function mine(mineable: Mineable): Promise<void> {
     await updateUserExperience(user.id, "mining", mineable.type.xp);
     user.addXp("mining", mineable.type.xp);
     userStore.set(user);
+
   }, mineable.type.timeToComplete * 1000);
 }
 
 export function stopMining(): void {
   clearInterval(miningIntervalId);
+  gameStore.update((state) => {
+    return { ...state, isMining: false }
+  });
 }
 
 export function canHarvest(mineable: Mineable): boolean {

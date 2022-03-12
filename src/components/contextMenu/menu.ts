@@ -69,12 +69,18 @@ async function getMineableOptions(gameState: GameStore): Promise<any[]> {
     { 
       text: "mine", 
       disabled: !canHarvest(mineable), 
-      method: async () => { await mine(mineable) }
+      method: async () => { 
+        // someday, replace this with a stopAll method.
+        if (gameState.isMining) {
+          stopMining();
+        }
+        await mine(mineable);
+      }
     }, 
     { 
       text: "stop mining", 
-      disabled: true, 
-      method: () => { stopMining }
+      disabled: !gameState.isMining, 
+      method: () => { stopMining() }
     }, 
     { 
       text: "examine", 
