@@ -1,8 +1,8 @@
 import type { ItemSummary, Yield } from "../../types";
-import { types } from "../../helpers/craftable";
-import type { CraftableType } from "../../helpers/craftable";
+import { types } from "../../helpers/scriptable";
+import type { ScriptableType } from "../../helpers/scriptable";
 
-type CraftableOptions = {
+type ScriptableOptions = {
   type: string;
   id?: string;
 }
@@ -13,17 +13,17 @@ type ItemsSatisfied = {
   currentQuantity: number;
 }
 
-class Craftable {
-  type: CraftableType;
+class Scriptable {
+  type: ScriptableType;
   id?: string;
 
-  constructor(craftableOptions: CraftableOptions) {
-    const { type, id } = craftableOptions;
+  constructor(scriptableOptions: ScriptableOptions) {
+    const { type, id } = scriptableOptions;
     if (id) {
       this.id = id;
     }
 
-    const specifiedType: CraftableType = types.find((typeObj: CraftableType) => typeObj.name === type);
+    const specifiedType: ScriptableType = types.find((typeObj: ScriptableType) => typeObj.name === type);
     if (specifiedType) {
       this.type = specifiedType;
     } else {
@@ -55,7 +55,7 @@ class Craftable {
     // if all requisite items were passed in.
     const itemRequirementsSatisfied = itemsSatisfied.every((item) => item.currentQuantity >= item.quantity);
     if (itemRequirementsSatisfied === true) {
-      // craftables don't have random item drops right now. They drop 100% of the time. So just return them.
+      // scriptables don't have random item drops right now. They drop 100% of the time. So just return them.
       return yields;
     } else {
       throw new Error("REQUIREMENTS_NOT_SATISFIED");
@@ -63,4 +63,4 @@ class Craftable {
   }
 }
 
-export default Craftable;
+export default Scriptable;

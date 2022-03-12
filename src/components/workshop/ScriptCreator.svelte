@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { types } from "$lib/helpers/craftable";
-  import type { CraftableType } from "$lib/helpers/craftable";
+  import { types } from "$lib/helpers/scriptable";
+  import type { ScriptableType } from "$lib/helpers/scriptable";
   import { userStore } from "../../stores";
   import Inventory from "../Inventory.svelte";
-import Craftable from "$lib/classes/resources/craftable";
-import { updateUserExperience, updateUserInventory } from "$lib/services/user.service";
-import type { Yield } from "$lib/types";
+  import Scriptable from "$lib/classes/resources/scriptable";
+  import { updateUserExperience, updateUserInventory } from "$lib/services/user.service";
+  import type { Yield } from "$lib/types";
 
   let selectedScript;
   let disabled: boolean = true;
@@ -16,19 +16,18 @@ import type { Yield } from "$lib/types";
     }
   }
 
-  function getQuantityOfItem(itemId: string) {
+  function getQuantityOfItem(itemId: string): number {
     const inventory = $userStore.inventory;
-    console.log(inventory);
     const item = inventory.getItem(itemId);
     if (item) {
       console.log(item);
-      return item.quantity.toString();
+      return item.quantity;
     } else {
-      return "0";
+      return 0;
     }
   }
 
-  function hasItems(type: CraftableType): boolean {
+  function hasItems(type: ScriptableType): boolean {
     let hasItems: boolean = true;
     type.itemsRequired.forEach((itemSummary) => {
       const userQuantity = getQuantityOfItem(itemSummary.itemId);
@@ -49,7 +48,7 @@ import type { Yield } from "$lib/types";
 
     const intervalId = setInterval(async () => {
       if (hasItems(type)) {
-        const script = new Craftable({
+        const script = new Scriptable({
           type: type.name,
         });
 
@@ -57,7 +56,7 @@ import type { Yield } from "$lib/types";
         try {
           for (let i = 0; i < script.type.itemsRequired.length; i++) {
             const item = script.type.itemsRequired[i];
-            $userStore.inventory.removeItem(item.itemId);
+            $userStore.inventory.removeItem(item.itemId, script.type.itemsRequired[i].quantity);
             await updateUserInventory($userStore.id, $userStore.inventory);
           }
           await updateUserExperience($userStore.id, "scripting", script.type.xp);

@@ -1,10 +1,10 @@
 import type { HarvestableType, ItemSummary } from "../types";
 
-export interface CraftableType extends HarvestableType {
+export interface ScriptableType extends HarvestableType {
   itemsRequired: ItemSummary[];   
 }
 
-export const types: CraftableType[] = [
+export const types: ScriptableType[] = [
   {
     name: "if-then-statement",
     itemsRequired: [
