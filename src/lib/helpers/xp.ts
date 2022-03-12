@@ -37,3 +37,13 @@ function fullXPTree(): number[] {
   return levels;
 
 }
+
+export function toNextLevel(currentXp: number): number {
+  const currentLevel: number = xpToLevel(currentXp);
+  const currentLevelXp: number = levelToBaseXp(currentLevel);
+  const nextLevelXp: number = levelToBaseXp(currentLevel + 1);
+  const totalDifference: number = nextLevelXp - currentLevelXp;
+  const percentageComplete: number = (currentXp - currentLevelXp) / totalDifference;
+  const asReadablePercent: number = percentageComplete * 100;
+  return asReadablePercent;
+}
